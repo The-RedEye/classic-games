@@ -26,12 +26,14 @@ function playSimon(){
     listen = true
     acceptPattern(simonPattern.length)
     listen = false
+    if (simonPattern == playerPattern)
+      isCorrect(true)
+    else
+      isCorrect(false)
 
     gameOver = true //temporary check to stop initial infinite loop
   }
 
-
-}
 
 function createSimonBoard(){
   console.log("inside CreateSimonBoard function - WIP")
@@ -67,10 +69,27 @@ function acceptPattern(patternLength){
   
   //while (playerPattern.length < patternLength){
     //listen for events - append to playerPattern
+
+  //out of loop - showCorrect()
   }
 
 function yellowListen(){
   if (listen == true)
     playerPattern.push('yellow')
 }
+
+function isCorrect(result){
+  if (result == true){
+    //display winner result
+    //pause
+    playerPattern = []
+  }
+  else{
+    gameOver = true
+  }
+}
+
+
+} // end playSimon function ***MOVE OTHER FUNCTIONS INSIDE***
+
   
