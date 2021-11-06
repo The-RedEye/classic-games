@@ -21,7 +21,7 @@ function playSimon(){
 
   while(gameOver == false){
     
-    simonPattern.push(getColor)
+    simonPattern.push(getColor())
     displayPattern(simonPattern)
     listen = true
     acceptPattern(simonPattern.length)
