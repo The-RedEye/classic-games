@@ -1,7 +1,8 @@
 let header = document.body.querySelector(".header")
-let gameArea = document.body.querySelector(".gameArea")
+let playArea = document.body.querySelector(".playArea")
 let leftUI = document.body.querySelector(".leftUI")
 let rightUI = document.body.querySelector(".rightUI")
+let topMessage = document.body.querySelector(".topMessage")
 
 playSimon()
 
@@ -19,7 +20,7 @@ function playSimon(){
   let simonPattern = []
   let playerPattern = []
 
-  while(gameOver == false){
+  while(gameOver == false){  //main game loop
     
     simonPattern.push(getColor())
     displayPattern(simonPattern)
@@ -38,6 +39,15 @@ function playSimon(){
 function createSimonBoard(){
   console.log("inside CreateSimonBoard function - WIP")
   //creates the css formatting for Simon game
+  playArea.appendChild(yellowSquare)
+  yellowSquare.className="yellowSquare"
+  playArea.appendChild(redSquare)
+  redSquare.className="redSquare"
+  playArea.appendChild(blueSquare)
+  blueSquare.className="blueSquare"
+  playArea.appendChild(greenSquare)
+  greenSquare.className="greenSquare"
+
 }
 
 function activateSimonBoard(){
