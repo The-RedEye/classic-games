@@ -11,7 +11,7 @@ body {
   margin: 0 auto;
   left: 35%;
   right: 35%;
-  display: block;
+  display: grid; /* grid expands down, block trunkates*/
   /* flex-direction: column;
   justify-content: center;
   align-items: center; */
@@ -63,7 +63,7 @@ body {
   width: 150px;
   position: relative;
   top: 10%;  
-  background: yellow;
+  background: goldenrod;
 }
 
 .redSquare{
@@ -75,7 +75,7 @@ body {
   width: 150px;
   position: relative;
   top: 10%;  
-  background: red;
+  background: darkred;
 }
 
 .blueSquare{
@@ -87,7 +87,7 @@ body {
   width: 150px;
   position: relative;
   top: 10%;  
-  background: blue;
+  background: darkblue;
 }
 
 .greenSquare{
@@ -99,5 +99,18 @@ body {
   width: 150px;
   position: relative;
   top: 10%;  
-  background: green;
+  background: darkgreen;
+}
+
+.centerSquare{
+  border: 2px solid black;
+  grid-column: 2;
+  grid-row: 2;
+  margin: auto;
+  height: 50px;
+  width: 150px;
+  position: relative;
+  top: 10%;  
+  text-align: justify;
+  background: slateblue;
 }

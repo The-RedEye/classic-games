@@ -11,7 +11,12 @@ function playSimon(){
   let yellowSquare = document.createElement("span")
   let redSquare    = document.createElement("span")
   let greenSquare  = document.createElement("span")
-  let center = document.createElement("span")
+
+  let center      = document.createElement("span")
+  let startButton = document.createElement("button")
+  // make button hidden
+  startButton.innerText = "Start"
+  center.appendChild(startButton)
   let listen = false
 
   createSimonBoard()
@@ -47,12 +52,27 @@ function createSimonBoard(){
   blueSquare.className="blueSquare"
   playArea.appendChild(greenSquare)
   greenSquare.className="greenSquare"
+  playArea.appendChild(center)
+  center.className="centerSquare"
+  center.innerHTML="<h2>S I M O N</h2>"
 
 }
 
 function activateSimonBoard(){
   console.log("inside activateSimonBoard function - WIP")
   //creates event listeners for Simon colors
+  redSquare.addEventListener("click", clickRed)
+  redSquare.addEventListener("mouseover", highlightRed)
+  redSquare.addEventListener("mouseleave", resetRed)
+  yellowSquare.addEventListener("click", clickYellow)
+  yellowSquare.addEventListener("mouseover", highlightYellow)
+  yellowSquare.addEventListener("mouseleave", resetYellow)
+  blueSquare.addEventListener("click", clickBlue)
+  blueSquare.addEventListener("mouseover", highlighBlue)
+  blueSquare.addEventListener("mouseleave", resetBlue)
+  greenSquare.addEventListener("click", clickGreen)
+  greenSquare.addEventListener("mouseover", highlightGreen)
+  greenSquare.addEventListener("mouseleave", resetGreen)
 }
 
 function getColor(){
@@ -97,6 +117,65 @@ function isCorrect(result){
   else{
     gameOver = true
   }
+}
+
+function clickRed(){
+  console.log("Red Clicked")
+}
+
+function clickGreen(){
+  console.log("Green Clicked")
+
+}
+
+function clickBlue(){
+  console.log("Blue Clicked")
+
+}
+
+function clickYellow(){
+  console.log("Yellow Clicked")
+
+}
+
+function highlightRed(){
+  console.log("Highlighting Red")
+  redSquare.style.background = "red"
+}
+
+function highlightYellow(){
+  console.log("Highlighting Yellow")
+  yellowSquare.style.background = "yellow"
+}
+
+function highlightGreen(){
+  console.log("Highlighting Green")
+  greenSquare.style.background = "yellowgreen"
+}
+
+function highlighBlue(){
+  console.log("Highlighting Blue")
+  blueSquare.style.background = "skyblue"
+}
+
+function resetRed(){
+  console.log("resetting Red")
+  redSquare.style.background = "darkred"
+}
+
+function resetYellow(){
+  console.log("resetting Yellow")
+  yellowSquare.style.background = "goldenrod"
+}
+
+function resetBlue(){
+  console.log("resetting Blue")
+  blueSquare.style.background = "darkblue"
+}
+
+function resetGreen(){
+  console.log("resetting Green")
+  greenSquare.style.background = "darkgreen"
 }
 
 
