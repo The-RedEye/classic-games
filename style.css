@@ -1,7 +1,7 @@
 header {
   font-family: 'Courier New', Courier, monospace;
   margin: 0 auto;
-  display: grid;
+  display: block;
   justify-content: space-between;
   align-items: center;
 }
@@ -9,53 +9,95 @@ header {
 body {
   font-family: sans-serif;
   margin: 0 auto;
-  display: grid;
-  flex-direction: column;
+  left: 35%;
+  right: 35%;
+  display: block;
+  /* flex-direction: column;
   justify-content: center;
-  align-items: center
+  align-items: center; */
+  height: 100%;
 }
 
 .leftUI{
   left: 10px;
-  position: relative;
+  position: absolute;
   border: 5px solid black;
   margin: 0 auto;
-  height:100%;
-  width: 150px;
-  top: 30%;
-  bottom: 30%;
+  height:60%;
+  width: 15%;
+  top: 20%;
+  bottom: 10%;
 
 }
 
 .rightUI{
-  position: relative;
+  position: absolute;
   right: 10px;
   border: 5px solid black;
   margin: 0 auto;
-  height:100%;
-  width: 150px;
-  top: 30%;
-  bottom: 30%; /* Why does it reach the bottom? */
+  height:60%;
+  width: 15%;
+  top: 20%;
+  bottom: 10%;
 }
 
 .playArea{
-  display: flex;
-  border: 2px;
-  height: 100%; /* Why DOESN'T this reach the bottom */
-  width: 100%;
+  display: grid;
+  grid-template-columns: 30% 40% 30%;
+  grid-template-rows: 30% 40% 30%;
+  border: 2px dotted darkgrey;
+  margin: 35% auto;
+  height: 80%;
+  width: 65%;
  
-  background: blue;
+  background: silver;
 
 }
 
 .yellowSquare{
   border: 2px solid black;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  grid-column: 2;
+  grid-row: 1;
+  margin: auto;
   height: 50px;
   width: 150px;
   position: relative;
-  top: 10%;
-  
+  top: 10%;  
+  background: yellow;
+}
+
+.redSquare{
+  border: 2px solid black;
+  grid-column: 1;
+  grid-row: 2;
+  margin: auto;
+  height: 50px;
+  width: 150px;
+  position: relative;
+  top: 10%;  
+  background: red;
+}
+
+.blueSquare{
+  border: 2px solid black;
+  grid-column: 3;
+  grid-row: 2;
+  margin: auto;
+  height: 50px;
+  width: 150px;
+  position: relative;
+  top: 10%;  
+  background: blue;
+}
+
+.greenSquare{
+  border: 2px solid black;
+  grid-column: 2;
+  grid-row: 3;
+  margin: auto;
+  height: 50px;
+  width: 150px;
+  position: relative;
+  top: 10%;  
+  background: green;
 }
