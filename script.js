@@ -5,6 +5,9 @@ let rightUI = document.body.querySelector(".rightUI")
 let topMessage = document.body.querySelector(".topMessage")
 
 playSimon()
+//Q1 : why is play area below
+//Q2 : Center text alignment and <span> not aligned with grid
+
 
 function playSimon(){
   let blueSquare   = document.createElement("span")
@@ -121,20 +124,29 @@ function isCorrect(result){
 
 function clickRed(){
   console.log("Red Clicked")
+  redSquare.style.border = "10px double silver"
+  redSquare.style.padding = "10px"
+
 }
 
 function clickGreen(){
   console.log("Green Clicked")
+  greenSquare.style.border = "10px double silver"
+  greenSquare.style.padding = "10px"
 
 }
 
 function clickBlue(){
   console.log("Blue Clicked")
+  blueSquare.style.border = "10px double silver"
+  blueSquare.style.padding = "10px"
 
 }
 
 function clickYellow(){
   console.log("Yellow Clicked")
+  yellowSquare.style.border = "10px double silver"
+  yellowSquare.style.padding = "10px"
 
 }
 
@@ -150,7 +162,7 @@ function highlightYellow(){
 
 function highlightGreen(){
   console.log("Highlighting Green")
-  greenSquare.style.background = "yellowgreen"
+  greenSquare.style.background = "greenyellow"
 }
 
 function highlighBlue(){
@@ -161,21 +173,29 @@ function highlighBlue(){
 function resetRed(){
   console.log("resetting Red")
   redSquare.style.background = "darkred"
+  redSquare.style.border = "2px solid black"
+  redSquare.style.padding = "18px"
 }
 
 function resetYellow(){
   console.log("resetting Yellow")
   yellowSquare.style.background = "goldenrod"
+  yellowSquare.style.border = "2px solid black"
+  yellowSquare.style.padding = "18px"
 }
 
 function resetBlue(){
   console.log("resetting Blue")
   blueSquare.style.background = "darkblue"
+  blueSquare.style.border = "2px solid black"
+  blueSquare.style.padding = "18px"
 }
 
 function resetGreen(){
   console.log("resetting Green")
   greenSquare.style.background = "darkgreen"
+  greenSquare.style.border = "2px solid black"
+  greenSquare.style.padding = "18px"
 }
 
 
