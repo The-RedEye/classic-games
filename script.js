@@ -50,14 +50,30 @@ function playSimon(){
 function createSimonBoard(){
   console.log("inside CreateSimonBoard function - WIP")
   //creates the css formatting for Simon game
-  playArea.appendChild(yellowSquare)
-  yellowSquare.className="yellowSquare"
-  playArea.appendChild(redSquare)
+  let redCell = document.createElement("div")
+  redCell.className = "redCell"
+  redCell.appendChild(redSquare)
   redSquare.className="redSquare"
-  playArea.appendChild(blueSquare)
+  playArea.appendChild(redCell)
+
+  let yellowCell = document.createElement("div")
+  yellowCell.className = "yellowCell"
+  yellowCell.appendChild(yellowSquare)
+  playArea.appendChild(yellowCell)
+  yellowSquare.className="yellowSquare"
+
+  let blueCell = document.createElement("div")
+  blueCell.className = "blueCell"
+  blueCell.appendChild(blueSquare)
+  playArea.appendChild(blueCell)
   blueSquare.className="blueSquare"
-  playArea.appendChild(greenSquare)
+
+  let greenCell = document.createElement("div")
+  greenCell.className = "greenCell"
+  greenCell.appendChild(greenSquare)
+  playArea.appendChild(greenCell)
   greenSquare.className="greenSquare"
+
   playArea.appendChild(center)
   console.log("center:", center)
   center.className="centerSquare"
