@@ -19,10 +19,7 @@ function playSimon(){
   let startButton = document.createElement("button")
   // make button hidden
   startButton.innerText = "Start"
-  console.log(startButton)
   center.appendChild(startButton)
-  
-  console.log("center:", center)
   let listen = false
 
   createSimonBoard()
@@ -59,9 +56,8 @@ function createSimonBoard(){
   playArea.appendChild(greenSquare)
   greenSquare.className="greenSquare"
   playArea.appendChild(center)
-  console.log("center:", center)
   center.className="centerSquare"
-  center.innerHTML="<h2>S I M O N</h2>" + center.innerHTML
+  center.innerHTML="<h2>S I M O N</h2>"
 
 }
 
@@ -75,7 +71,7 @@ function activateSimonBoard(){
   yellowSquare.addEventListener("mouseover", highlightYellow)
   yellowSquare.addEventListener("mouseleave", resetYellow)
   blueSquare.addEventListener("click", clickBlue)
-  blueSquare.addEventListener("mouseover", highlightBlue)
+  blueSquare.addEventListener("mouseover", highlighBlue)
   blueSquare.addEventListener("mouseleave", resetBlue)
   greenSquare.addEventListener("click", clickGreen)
   greenSquare.addEventListener("mouseover", highlightGreen)
@@ -93,28 +89,11 @@ function getColor(){
     return 'blue'
   else
     return 'green'
+
 }
 
 function displayPattern(pattern){
   console.log("inside of displayPattern function - WIP")
-  for(let i = 0; i <pattern.length; i++){
-    if (pattern[i]=="red"){
-      highlightRed()
-      setTimeout(resetRed, 1000)
-    }
-    else if(pattern[i]=="green"){
-      highlightGreen()
-      setTimeout(resetGreen, 1000)
-    }
-    else if(pattern[i]=="blue"){
-      highlightBlue()
-      setTimeout(resetBlue, 1000)
-    }
-    else{
-      highlightYellow()
-      setTimeout(resetYellow, 1000)
-    }
-  }
   //accepts pattern as an argument and displays it
 }
 
@@ -127,6 +106,10 @@ function acceptPattern(patternLength){
   //out of loop - showCorrect()
   }
 
+function yellowListen(){
+  if (listen == true)
+    playerPattern.push('yellow')
+}
 
 function isCorrect(result){
   if (result == true){
@@ -143,8 +126,6 @@ function clickRed(){
   console.log("Red Clicked")
   redSquare.style.border = "10px double silver"
   redSquare.style.padding = "10px"
-  if (listen == true)
-    playerPattern.push('red')
 
 }
 
@@ -152,24 +133,21 @@ function clickGreen(){
   console.log("Green Clicked")
   greenSquare.style.border = "10px double silver"
   greenSquare.style.padding = "10px"
-  if (listen==true)
-    playerPattern.push('green')
+
 }
 
 function clickBlue(){
   console.log("Blue Clicked")
   blueSquare.style.border = "10px double silver"
   blueSquare.style.padding = "10px"
-  if (listen == true)
-    playerPattern.push('blue')
+
 }
 
 function clickYellow(){
   console.log("Yellow Clicked")
   yellowSquare.style.border = "10px double silver"
   yellowSquare.style.padding = "10px"
-  if (listen == true)
-    playerPattern.push('yellow')
+
 }
 
 function highlightRed(){
@@ -187,7 +165,7 @@ function highlightGreen(){
   greenSquare.style.background = "greenyellow"
 }
 
-function highlightBlue(){
+function highlighBlue(){
   console.log("Highlighting Blue")
   blueSquare.style.background = "skyblue"
 }
@@ -219,8 +197,6 @@ function resetGreen(){
   greenSquare.style.border = "2px solid black"
   greenSquare.style.padding = "18px"
 }
-
-
 
 
 } // end playSimon function ***MOVE OTHER FUNCTIONS INSIDE***
