@@ -70,6 +70,7 @@ function playSimon(){
   startButton.innerText = "> Start <"
   startButton.className = "startButton"
   centerMessage.className = "centerMessage"
+  startButton.style.visibility = "visible"
   
   center.appendChild(startButton)
   center.appendChild(centerMessage)
@@ -90,13 +91,16 @@ function playSimon(){
   let time = 10
 
 function startGame(){
+ 
+
   if (reset==true){
     simonPattern = []
+    startButton.style.visibility="hidden"
     reset = false
   }
   console.log(`lvl${level}`)
   topMessage.innerText = ""
-  centerMessage.innerText = `\nLevel ${level} \nShowing Pattern`
+  centerMessage.innerText = `Level ${level} \nShowing Pattern`
   playerPattern = []
 
   simonPattern.push(getColor())
@@ -188,7 +192,7 @@ function displayPattern(pattern){
 
   setTimeout(() => listen = true, pauseInputTimer)
   setTimeout(() => center.style.background = "slateblue", pauseInputTimer)
-  setTimeout(() => centerMessage.innerText = `\nLevel ${level} \n Your Turn!`, pauseInputTimer)
+  setTimeout(() => centerMessage.innerText = `Level ${level} \n Your Turn!`, pauseInputTimer)
   for (i = 0; i < pattern.length; i++){
     console.log("patternLength:", pattern)
     if (pattern[i]=="red"){
@@ -272,7 +276,7 @@ function isCorrect(){
     gameOver()
   else{
     topMessage.innerText = `Level ${level} complete!`
-    centerMessage.innerText = `\nLevel ${level} complete! \n \nStarting next level in 3 seconds`
+    centerMessage.innerText = `Level ${level} complete! \n \nStarting next level in 3 seconds`
     level +=1
     listen = false
     clearTimeout(timer)
@@ -285,9 +289,10 @@ function isCorrect(){
 function gameOver(){
   console.log("in gameOver Function")
   topMessage.innerText = 'Game Over'
-  centerMessage.innerText = '\n\nWrong Pattern \nGame Over'
+  centerMessage.innerText = '\nWrong Pattern \nGame Over'
   reset = true
   level = 1
+  startButton.style.visibility="visible"
   clearTimeout(timer)
   timeDisplay.innerText=""
 }
@@ -299,11 +304,12 @@ function clickRed(){
     redSquare.style.background = "red"
     redSquare.style.border = "10px double silver"
     redSquare.style.padding = "10px"
+    setTimeout(resetRed, 300)
     
   }
 
   if (listen == false)
-   centerMessage.innerText +="\n\n !WAIT FOR YOUR TURN!"
+   centerMessage.innerText +="\n !WAIT FOR YOUR TURN!"
 
   if (playerPattern.length >= simonPattern.length)
     isCorrect() 
@@ -428,6 +434,13 @@ function playTicTacToe(){
 console.log("inside playTicTacToe")
 header.innerText = "Tic-Tac-Toe"
 headerTitle.innerText = "Under construction\n Come back later"
+modifyReturnToHub()
+
+
+function modifyReturnToHub(){
+  console.log("in modifyReturnHub function")
+  //function to display return to hub
+}
 }
 
 
