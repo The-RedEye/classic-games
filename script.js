@@ -4,10 +4,42 @@ let leftUI = document.body.querySelector(".leftUI")
 let rightUI = document.body.querySelector(".rightUI")
 let topMessage = document.body.querySelector(".topMessage")
 let headerTitle = document.body.querySelector(".header-title")
+let footer = document.body.querySelector(".footer")
 
-playSimon()
+let gameChoice = ""
+let returnToHub = document.body.querySelector(".returnToHub")
+
+// Global Declarations for choosing the game
+let simon = document.createElement("div")
+simon.className = "simonGame"
+simon.innerText = "Simon"
+
+let ticTacToe = document.createElement("div")
+ticTacToe.className = "ticTacToeGame"
+ticTacToe.innerText = "Tic-Tac-Toe"
+
+playArea.appendChild(simon)
+playArea.appendChild(ticTacToe)
 
 
+//playSimon()
+chooseGame()
+
+function createPlayArea(row,col){
+
+  
+  // grid-row: 2;
+  // grid-column: 2;
+  // display: grid;
+  // left: 20%;
+  // top: 20%;
+  
+  // grid-template-columns: 30% 40% 30%;
+  // grid-template-rows: 30% 40% 30%;
+  // border: 2px dotted darkgrey;
+  // background: silver;
+
+}
 
 function playSimon(){
   let blueSquare   = document.createElement("span")
@@ -15,6 +47,12 @@ function playSimon(){
   let redSquare    = document.createElement("span")
   let greenSquare  = document.createElement("span")
   let centerMessage = document.createElement("div")
+ 
+  let redCell = document.createElement("div")
+  let yellowCell = document.createElement("div")
+  let blueCell = document.createElement("div")
+  let greenCell = document.createElement("div")
+  
 
   let center      = document.createElement("span")
   let startButton = document.createElement("button")
@@ -31,9 +69,12 @@ function playSimon(){
   center.appendChild(startButton)
   center.appendChild(centerMessage)
   center.appendChild(timeDisplay)
+
+  // returnToHub.removeEventListener("mouseover", )
  
   createSimonBoard()
   activateSimonBoard()
+  modifyReturnToHub()
 
   let listen = false
   let simonPattern = []
@@ -61,54 +102,59 @@ function startGame(){
 
 function createSimonBoard(){
   console.log("inside CreateSimonBoard function")
-  //creates the css formatting for Simon game
-  let redCell = document.createElement("div")
+
+  playArea.appendChild(center)
+  center.className="centerSquare"
+  center.style.fontSize = "Large"
+
   redCell.className = "redCell"
   redCell.appendChild(redSquare)
   redSquare.className="redSquare"
   playArea.appendChild(redCell)
-
-  let yellowCell = document.createElement("div")
+  
   yellowCell.className = "yellowCell"
   yellowCell.appendChild(yellowSquare)
   playArea.appendChild(yellowCell)
   yellowSquare.className="yellowSquare"
-
-  let blueCell = document.createElement("div")
+  
   blueCell.className = "blueCell"
   blueCell.appendChild(blueSquare)
   playArea.appendChild(blueCell)
   blueSquare.className="blueSquare"
 
-  let greenCell = document.createElement("div")
   greenCell.className = "greenCell"
   greenCell.appendChild(greenSquare)
   playArea.appendChild(greenCell)
   greenSquare.className="greenSquare"
-
-  playArea.appendChild(center)
-  center.className="centerSquare"
-  center.style.fontSize = "Large"
- 
+  
+  redCell.style.visiblity = "visible"
+  yellowCell.style.visiblity = "visible"
+  blueCell.style.visiblity = "visible"
+  greenCell.style.visiblity = "visible"
 
 }
 
 function activateSimonBoard(){
   console.log("inside activateSimonBoard function")
   //creates event listeners for Simon colors
+  center.style.visibility = "visible"
+
   redSquare.addEventListener("click", clickRed)
   redSquare.addEventListener("mouseover", highlightRed)
   redSquare.addEventListener("mouseleave", resetRed)
+  
   yellowSquare.addEventListener("click", clickYellow)
   yellowSquare.addEventListener("mouseover", highlightYellow)
   yellowSquare.addEventListener("mouseleave", resetYellow)
+  
   blueSquare.addEventListener("click", clickBlue)
   blueSquare.addEventListener("mouseover", highlightBlue)
   blueSquare.addEventListener("mouseleave", resetBlue)
+  
   greenSquare.addEventListener("click", clickGreen)
   greenSquare.addEventListener("mouseover", highlightGreen)
   greenSquare.addEventListener("mouseleave", resetGreen)
-}
+  }
 
 function getColor(){
   rand = Math.floor(Math.random()*4)
@@ -137,7 +183,7 @@ function displayPattern(pattern){
 
   setTimeout(() => listen = true, pauseInputTimer)
   setTimeout(() => center.style.background = "slateblue", pauseInputTimer)
-  setTimeout(() => centerMessage.innerText = `Level ${level} \n Your Turn!`, pauseInputTimer)
+  setTimeout(() => centerMessage.innerText = `\nLevel ${level} \n Your Turn!`, pauseInputTimer)
   for (i = 0; i < pattern.length; i++){
     console.log("patternLength:", pattern)
     if (pattern[i]=="red"){
@@ -160,6 +206,36 @@ function displayPattern(pattern){
   }
  timer = setTimeout(beginTimer, pauseInputTimer)
   
+}
+
+function modifyReturnToHub(){
+  console.log(returnToHub)
+  returnToHub.style.visibility = "visible"
+  returnToHub.addEventListener("click", returnFromSimon)
+
+  function returnFromSimon(){
+    center.style.visibility = "hidden"
+    
+    // let redCell = document.body.querySelector(".redCell")
+    redCell.style.visibility = "hidden"
+    
+    // let yellowCell = document.body.querySelector(".yellowCell")
+    yellowCell.style.visibility = "hidden"
+  
+    
+    // let blueCell = document.body.querySelector(".blueCell")
+    blueCell.style.visibility = "hidden"
+  
+    
+    // let greenCell = document.body.querySelector(".greenCell")
+    greenCell.style.visibility = "hidden"
+    
+
+    
+    returnToHub.style.visibility = "hidden"
+    chooseGame()
+  }
+
 }
 
 function beginTimer(){
@@ -344,5 +420,42 @@ function resetAllColors(){
 } // end playSimon function ***MOVE OTHER FUNCTIONS INSIDE***
 
 function playTicTacToe(){
+console.log("inside playTicTacToe")
+header.innerText = "Tic-Tac-Toe"
+headerTitle.innerText = "Under construction\n Come back later"
+}
 
+
+function chooseGame(){
+  
+  createHub()
+
+  function createHub(){
+    simon.style.visibility     = "visible"
+    ticTacToe.style.visibility = "visible"
+    
+    simon.addEventListener("click", () => startSimon())
+    ticTacToe.addEventListener("click", () => startTicTacToe())
+
+  }
+
+  function startSimon(){
+    clearHub()
+    gameChoice = "simon"
+    playSimon()
+  }
+
+  function startTicTacToe(){
+    clearHub()
+    gameChoice = "ticTacToe"
+    playTicTacToe()
+  }
+
+  function clearHub(){
+    simon.style.visibility     = "hidden"
+    ticTacToe.style.visibility = "hidden"
+    simon.removeEventListener("click", startSimon)
+    ticTacToe.removeEventListener("click", startTicTacToe)
+    //clear all parts of hub
+  }
 }
