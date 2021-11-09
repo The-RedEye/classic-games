@@ -22,7 +22,6 @@ playArea.appendChild(simon)
 playArea.appendChild(ticTacToe)
 
 
-//playSimon()
 chooseGame()
 
 function createPlayArea(row,col){
