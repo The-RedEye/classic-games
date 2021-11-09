@@ -26,6 +26,7 @@ function playSimon(){
   startButton.addEventListener("click", startGame)
   startButton.innerText = "> Start <"
   startButton.className = "startButton"
+  centerMessage.className = "centerMessage"
   
   center.appendChild(startButton)
   center.appendChild(centerMessage)
@@ -129,14 +130,14 @@ function displayPattern(pattern){
   listen = false
   clearTimeout(timer)
   time = 10
-  timeDisplay.innerText="\n 10 second(s)"
+  timeDisplay.innerText="\n10 second(s)"
   resetAllColors()
   console.log("listening:", listen)
   let pauseInputTimer = ( (pattern.length*1500)-500)
 
   setTimeout(() => listen = true, pauseInputTimer)
   setTimeout(() => center.style.background = "slateblue", pauseInputTimer)
-  setTimeout(() => centerMessage.innerText = `\n Level ${level}, \n Your Turn!`, pauseInputTimer)
+  setTimeout(() => centerMessage.innerText = `Level ${level} \n Your Turn!`, pauseInputTimer)
   for (i = 0; i < pattern.length; i++){
     console.log("patternLength:", pattern)
     if (pattern[i]=="red"){
