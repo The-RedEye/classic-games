@@ -201,17 +201,30 @@ body {
 
 .simonGame{
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 2;
   visibility: visible;
 
 }
 
 .ticTacToeGame{
   grid-column: 3;
-  grid-row: 1;
+  grid-row: 2;
   visibility: visible;
 }
 
 .returnToHub{
   visibility: hidden;
+}
+
+.imgLogo{
+  width: 180px;
+  height: 120px;
+  display: flex;
+  padding: 10%;
+  justify-content: space-between;
+  
+}
+
+.imgLogo:hover{
+  cursor: pointer;
 }

@@ -12,11 +12,17 @@ let returnToHub = document.body.querySelector(".returnToHub")
 // Global Declarations for choosing the game
 let simon = document.createElement("div")
 simon.className = "simonGame"
-simon.innerText = "Simon"
+let simonLogo = document.createElement("img")
+simonLogo.src = "simonLOGO.jpg"
+simonLogo.className = "imgLogo"
+simon.appendChild(simonLogo)
 
 let ticTacToe = document.createElement("div")
 ticTacToe.className = "ticTacToeGame"
-ticTacToe.innerText = "Tic-Tac-Toe"
+let ticTacToeLogo = document.createElement("img")
+ticTacToeLogo.src = "ticTacToeLOGO.png"
+ticTacToeLogo.className = "imgLogo"
+ticTacToe.appendChild(ticTacToeLogo)
 
 playArea.appendChild(simon)
 playArea.appendChild(ticTacToe)
