@@ -14,40 +14,46 @@ function playSimon(){
   let yellowSquare = document.createElement("span")
   let redSquare    = document.createElement("span")
   let greenSquare  = document.createElement("span")
+  let centerMessage = document.createElement("div")
 
   let center      = document.createElement("span")
   let startButton = document.createElement("button")
+  
   // make button hidden
   startButton.addEventListener("click", startGame)
   startButton.innerText = "> Start <"
-  console.log(startButton)
-  center.appendChild(startButton)
+  startButton.className = "startButton"
   
-  console.log("center:", center)
-  let listen = false
-
+  center.appendChild(startButton)
+  center.appendChild(centerMessage)
+ 
   createSimonBoard()
   activateSimonBoard()
+
+  let listen = false
   let simonPattern = []
   let playerPattern = []
-  
+  let reset = true
   let level = 1
 
 function startGame(){
-  console.log("in startGame Function")
+  if (reset==true){
+    simonPattern = []
+    reset = false
+  }
+  console.log(`lvl${level}`)
   topMessage.innerText = ""
+  centerMessage.innerText = `\nLevel ${level} - Showing Pattern`
   playerPattern = []
 
   simonPattern.push(getColor())
   console.log("simonPattern:" , simonPattern)
   displayPattern(simonPattern)
 
-
 }
 
-
 function createSimonBoard(){
-  console.log("inside CreateSimonBoard function - WIP")
+  console.log("inside CreateSimonBoard function")
   //creates the css formatting for Simon game
   let redCell = document.createElement("div")
   redCell.className = "redCell"
@@ -74,14 +80,14 @@ function createSimonBoard(){
   greenSquare.className="greenSquare"
 
   playArea.appendChild(center)
-  console.log("center:", center)
   center.className="centerSquare"
+  center.style.fontSize = "Large"
  
 
 }
 
 function activateSimonBoard(){
-  console.log("inside activateSimonBoard function - WIP")
+  console.log("inside activateSimonBoard function")
   //creates event listeners for Simon colors
   redSquare.addEventListener("click", clickRed)
   redSquare.addEventListener("mouseover", highlightRed)
@@ -98,9 +104,8 @@ function activateSimonBoard(){
 }
 
 function getColor(){
-  rand = 1
-  // Math.floor(Math.random()*4)
-  // console.log(`color value found: ${rand}`)
+  rand = Math.floor(Math.random()*4)
+  console.log(`color value found: ${rand}`)
   if(rand == 0)
     return 'yellow'
   else if (rand == 1)
@@ -112,148 +117,162 @@ function getColor(){
 }
 
 function displayPattern(pattern){
-  console.log("inside of displayPattern function - WIP")
+  console.log("inside of displayPattern function")
   console.log("simonPattern Length:", pattern.length)
+  center.style.background = "slategrey"
+  listen = false
+  resetAllColors()
+  console.log("listening:", listen)
+  let pauseInputTimer = ( (pattern.length*1500)-500)
 
-  resetGreen()
-  resetBlue()
-  resetRed()
-  resetYellow()
-  if (pattern.length == 0)
-    listen = true
-    if (pattern[0]=="red"){
-      highlightRed()
-      setTimeout(() => displayPattern(pattern.slice(1)), 1000)
+  setTimeout(() => listen = true, pauseInputTimer)
+  setTimeout(() => center.style.background = "slateblue", pauseInputTimer)
+  setTimeout(() => centerMessage.innerText = `\n Level ${level}, \n Your Turn!`, pauseInputTimer)
+  for (i = 0; i < pattern.length; i++){
+    console.log("patternLength:", pattern)
+    if (pattern[i]=="red"){
+      setTimeout(() => highlightRed(), (i*1000) )
+      setTimeout(() => resetRed(), (i*1000) + 500)
     }
     else if(pattern[i]=="green"){
-      highlightGreen()
-      setTimeout(resetGreen, 1000)
+      setTimeout(() => highlightGreen(), (i*1000) )
+      setTimeout(() => resetGreen(), (i*1000) + 500)
     }
     else if(pattern[i]=="blue"){
-      highlightBlue()
-      setTimeout(resetBlue, 1000)
+      setTimeout(() => highlightBlue(), (i*1000) )
+      setTimeout(() => resetBlue(), (i*1000) + 500)
     }
-    else{
-      highlightYellow()
-      setTimeout(resetYellow, 1000)
+    else {
+      setTimeout(() => highlightYellow(), (i*1000) )
+      setTimeout(() => resetYellow(), (i*1000) + 500)
     }
-  
-  
-}
 
-function acceptPattern(patternLength){
-  console.log("inside of acceptPattern function - WIP")
-  
-  while (playerPattern.length < patternLength){
-    
-    //listen for events - append to playerPattern
-    
-  //out of loop - showCorrect()
   }
+  
 }
 
 function isCorrect(){
   console.log("in isCorrect function")
+  let check = true
   for (let i = 0; i< simonPattern.length; i++){
     if (simonPattern[i] != playerPattern[i])
-      return false
+      check = false
   }
 
-  return true
+  if (check == false)
+    gameOver()
+  else{
+    topMessage.innerText = `Level ${level} complete!`
+    centerMessage.innerText = `\nLevel ${level} complete! \n Starting next level in 3 seconds`
+    level +=1
+    listen = false
+    setTimeout(startGame, 3000)
+  }
+  
 }
 
 function gameOver(){
   console.log("in gameOver Function")
   topMessage.innerText = 'Game Over'
+  centerMessage.innerText = '\n\nWrong Pattern \nGame Over'
+  reset = true
+  level = 1
 }
 
 function clickRed(){
-  console.log(`Red Clicked, listen:${listen}`)
-  redSquare.style.border = "10px double silver"
-  redSquare.style.padding = "10px"
-
-  if (listen == true)
+  
+  if (listen == true && playerPattern.length<=simonPattern.length){
     playerPattern.push('red')
-
-  if (playerPattern.length == simonPattern.length){
-    if (isCorrect()){
-      topMessage.innerText = `Level ${level} complete!`
-      level +=1
-      listen = false
-      setTimeout(startGame, 3000)
-    }
-    else{
-      gameOver()
-    }
+    redSquare.style.background = "red"
+    redSquare.style.border = "10px double silver"
+    redSquare.style.padding = "10px"
+    
   }
+
+  if (listen == false)
+   centerMessage.innerText +="\n\n !WAIT FOR YOUR TURN!"
+
+  if (playerPattern.length >= simonPattern.length)
+    isCorrect() 
 
 }
 
 function clickGreen(){
   console.log("Green Clicked")
-  greenSquare.style.border = "10px double silver"
-  greenSquare.style.padding = "10px"
-  if (listen==true)
+  
+  if (listen==true){
     playerPattern.push('green')
-
-    if (playerPattern.length == simonPattern.length){
-    if (playerPattern == simonPattern){
-      isCorrect(true)
-    }
-    else
-      isCorrect(false)
+    greenSquare.style.background = "greenyellow"
+    greenSquare.style.border = "10px double silver"
+    greenSquare.style.padding = "10px"
+    setTimeout(resetRed, 300)
   }
+
+  if (listen == false)
+   centerMessage.innerText +="\n\n !WAIT FOR YOUR TURN!"
+
+  if (playerPattern.length >= simonPattern.length)
+    isCorrect() 
 
 }
 
 function clickBlue(){
   console.log("Blue Clicked")
-  blueSquare.style.border = "10px double silver"
-  blueSquare.style.padding = "10px"
-  if (listen == true)
-    playerPattern.push('blue')
 
-    if (playerPattern.length == simonPattern.length){
-    if (playerPattern == simonPattern){
-      isCorrect(true)
-    }
-    else
-      isCorrect(false)
+  if (listen == true){
+    playerPattern.push('blue')
+    blueSquare.style.background = "skyblue"
+    blueSquare.style.border = "10px double silver"
+    blueSquare.style.padding = "10px"
+    setTimeout(resetBlue, 300)
   }
+
+  if (listen == false)
+   centerMessage.innerText +="\n\n !WAIT FOR YOUR TURN!"
+
+  if (playerPattern.length >= simonPattern.length)
+    isCorrect() 
 
 }
 
 function clickYellow(){
   console.log("Yellow Clicked")
-  yellowSquare.style.border = "10px double silver"
-  yellowSquare.style.padding = "10px"
-  if (listen == true)
+  
+  if (listen == true){
     playerPattern.push('yellow')
-
-    if (playerPattern.length == simonPattern.length){
-    if (playerPattern == simonPattern){
-      isCorrect(true)
-    }
-    else
-      isCorrect(false)
+    yellowSquare.style.background = "yellow"
+    yellowSquare.style.border = "10px double silver"
+    yellowSquare.style.padding = "10px"
+    setTimeout(resetYellow, 300)
   }
 
+  if (listen == false)
+   centerMessage.innerText +="\n\n !WAIT FOR YOUR TURN!"
+
+  if (playerPattern.length >= simonPattern.length)
+    isCorrect() 
+
+  
 }
 
 function highlightRed(){
-  redSquare.style.background = "red"
+  
+    redSquare.style.background = "red"
 }
 
 function highlightYellow(){
+  
   yellowSquare.style.background = "yellow"
 }
 
 function highlightGreen(){
-  greenSquare.style.background = "greenyellow"
+  
+    greenSquare.style.background = "greenyellow"
 }
 
 function highlightBlue(){
-  blueSquare.style.background = "skyblue"
+  
+    blueSquare.style.background = "skyblue"
 }
 
 function resetRed(){
@@ -278,6 +297,13 @@ function resetGreen(){
   greenSquare.style.background = "darkgreen"
   greenSquare.style.border = "2px solid black"
   greenSquare.style.padding = "18px"
+}
+
+function resetAllColors(){
+  resetGreen()
+  resetBlue()
+  resetYellow()
+  resetRed()
 }
 
 
