@@ -3,10 +3,10 @@ let playArea = document.body.querySelector(".playArea")
 let leftUI = document.body.querySelector(".leftUI")
 let rightUI = document.body.querySelector(".rightUI")
 let topMessage = document.body.querySelector(".topMessage")
+let headerTitle = document.body.querySelector(".header-title")
 
 playSimon()
-//Q1 : why is play area below
-//Q2 : Center text alignment and <span> not aligned with grid
+
 
 
 function playSimon(){
@@ -18,7 +18,10 @@ function playSimon(){
 
   let center      = document.createElement("span")
   let startButton = document.createElement("button")
-  
+  let timeDisplay = document.createElement("div")
+ 
+  headerTitle.innerText = "SIMON"
+  topMessage.innerText = "Press >Start< to begin"
   // make button hidden
   startButton.addEventListener("click", startGame)
   startButton.innerText = "> Start <"
@@ -26,6 +29,7 @@ function playSimon(){
   
   center.appendChild(startButton)
   center.appendChild(centerMessage)
+  center.appendChild(timeDisplay)
  
   createSimonBoard()
   activateSimonBoard()
@@ -35,6 +39,8 @@ function playSimon(){
   let playerPattern = []
   let reset = true
   let level = 1
+  let timer = 0
+  let time = 10
 
 function startGame(){
   if (reset==true){
@@ -43,7 +49,7 @@ function startGame(){
   }
   console.log(`lvl${level}`)
   topMessage.innerText = ""
-  centerMessage.innerText = `\nLevel ${level} - Showing Pattern`
+  centerMessage.innerText = `\nLevel ${level} \nShowing Pattern`
   playerPattern = []
 
   simonPattern.push(getColor())
@@ -121,6 +127,9 @@ function displayPattern(pattern){
   console.log("simonPattern Length:", pattern.length)
   center.style.background = "slategrey"
   listen = false
+  clearTimeout(timer)
+  time = 10
+  timeDisplay.innerText="\n 10 second(s)"
   resetAllColors()
   console.log("listening:", listen)
   let pauseInputTimer = ( (pattern.length*1500)-500)
@@ -148,7 +157,25 @@ function displayPattern(pattern){
     }
 
   }
+ timer = setTimeout(beginTimer, pauseInputTimer)
   
+}
+
+function beginTimer(){
+  
+  timer = setInterval(updateTime, 1000)
+
+  function updateTime() {
+    if (time>0){
+      time -=1
+      timeDisplay.innerText= `\n${time} second(s)`
+    }
+    if (time<=0){
+      timeDisplay.innerText=""
+      gameOver()
+    }
+  }
+
 }
 
 function isCorrect(){
@@ -163,9 +190,11 @@ function isCorrect(){
     gameOver()
   else{
     topMessage.innerText = `Level ${level} complete!`
-    centerMessage.innerText = `\nLevel ${level} complete! \n Starting next level in 3 seconds`
+    centerMessage.innerText = `\nLevel ${level} complete! \n \nStarting next level in 3 seconds`
     level +=1
     listen = false
+    clearTimeout(timer)
+    timeDisplay.innerText=""
     setTimeout(startGame, 3000)
   }
   
@@ -177,6 +206,8 @@ function gameOver(){
   centerMessage.innerText = '\n\nWrong Pattern \nGame Over'
   reset = true
   level = 1
+  clearTimeout(timer)
+  timeDisplay.innerText=""
 }
 
 function clickRed(){
@@ -311,4 +342,6 @@ function resetAllColors(){
 
 } // end playSimon function ***MOVE OTHER FUNCTIONS INSIDE***
 
-  
+function playTicTacToe(){
+
+}

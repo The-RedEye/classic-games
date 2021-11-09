@@ -167,3 +167,12 @@ body {
   justify-content: center;
 }
 
+.header-title{
+  display: flex;
+  justify-content: center;
+}
+
+.topMessage{
+  display: flex;
+  justify-content: center;
+}
