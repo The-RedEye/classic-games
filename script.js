@@ -125,6 +125,8 @@ function createSimonBoard(){
   yellowCell.style.visiblity = "visible"
   blueCell.style.visiblity = "visible"
   greenCell.style.visiblity = "visible"
+  leftUI.style.visibility = "visible"
+  rightUI.style.visibility = "visible"
 
 }
 
@@ -203,7 +205,7 @@ function displayPattern(pattern){
 }
 
 function modifyReturnToHub(){
-  console.log(returnToHub)
+  console.log("in returnToHub function")
   returnToHub.style.visibility = "visible"
   returnToHub.addEventListener("click", returnFromSimon)
 
@@ -214,6 +216,8 @@ function modifyReturnToHub(){
     blueCell.style.visibility = "hidden"
     greenCell.style.visibility = "hidden"
     startButton.style.visibility = "hidden"
+    leftUI.style.visibility = "hidden"
+    rightUI.style.visibility = "hidden"
  
     returnToHub.style.visibility = "hidden"
     chooseGame()
@@ -451,17 +455,21 @@ startGame()
     for (let i = 0; i<9; i++)
       tttCells[i].addEventListener("click", () => playerMove(tttCells[i]))
 
+    leftUI.style.visibility = "visible"
+    rightUI.style.visibility = "visible"
+    //create playAgain Button add listen function
+
     function playerMove(cell){
-      if(cell.innerText == '')
+      if(cell.innerText == ''){
         cell.innerText = currentPlayer
-      
-      if(currentPlayer == 'X'){
-        currentPlayer = 'O'
-        topMessage.innerText = "Second Player (O) to go"
-      }
-      else{
-        currentPlayer = 'X'
-        topMessage.innerText = "First Player (X) to go"
+        if(currentPlayer == 'X'){
+          currentPlayer = 'O'
+          topMessage.innerText = "Second Player (O) to go"
+        }
+        else{
+          currentPlayer = 'X'
+          topMessage.innerText = "First Player (X) to go"
+        }
       }
 
       checkWinner()
@@ -471,10 +479,16 @@ startGame()
 
   function checkWinner(){
     //ToDo: checks if the current player is a winner
+    let winnerFound = false
     console.log("inside checkWinner function")
+    if (winnerFound == true)
+      showPlayAgain()
   }
 
-
+  function showPlayAgain(){
+    console.log("inside showPlayAgain")
+    //change visibility of playAgain Button
+  }
 
 
   function modifyReturnToHub(){
@@ -483,16 +497,17 @@ startGame()
     returnToHub.style.visibility = "visible"
     returnToHub.addEventListener("click", returnFromTicTacToe)
   
-    function returnFromTicTacToe(){
-
-      //ToDo: make all elements in tictactoe invisible
+    function returnFromTicTacToe(){ //has bugs
 
       //make resetBTN hidden; return to hub
       returnToHub.style.visibility = "hidden"
       for (i=0; i<9; i++){
-      
+        tttCells[i].style.borderBottom = null
+        tttCells[i].style.borderRight = null
         tttCells[i].remove()
       }
+      leftUI.style.visibility = "hidden"
+      rightUI.style.visibility = "hidden"
       chooseGame()
     }
   }

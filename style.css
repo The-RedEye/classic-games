@@ -24,10 +24,10 @@ body {
 }
 
 .leftUI{
+  visibility: hidden;
   left: 10px;
   grid-column: 1;
   grid-row: 2;
-  /* position: absolute; */
   border: 5px groove silver;
   margin: 0 auto;
   height:60%;
@@ -38,7 +38,7 @@ body {
 }
 
 .rightUI{
-  /* position: absolute; */
+  visibility: hidden;
   grid-column: 3;
   grid-row: 2;
   right: 10px;
@@ -219,8 +219,8 @@ body {
 }
 
 .imgLogo{
-  width: 270px;
-  height: 180px;
+  max-width: 100%;
+  max-height: 100%;
   display: flex;
   margin: auto;
   justify-content: center;
