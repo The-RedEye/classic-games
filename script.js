@@ -29,8 +29,6 @@ ticTacToe.appendChild(ticTacToeLogo)
 playArea.appendChild(simon)
 playArea.appendChild(ticTacToe)
 
-
-
 chooseGame() //clears Hub Board and goes to main gaime function -- last function
 
 function playSimon(){  //Main Simon Main Game
@@ -600,7 +598,7 @@ function playChess(){
   modifyReturnToHub()
 
 
-  function modifyReturnToHub{
+  function modifyReturnToHub(){
     console.log("inside modifyReturnToHub(Chess) function")
   }
 }
