@@ -407,7 +407,7 @@ function resetAllColors(){
 function playTicTacToe(){ //Main TicTacToe Main TTT Game
 console.log("inside playTicTacToe")
 headerTitle.innerText = "Tic-Tac-Toe"
-topMessage.innerText = "Under construction\n Come back later"
+topMessage.innerText = "First Player (X) to go"
 modifyReturnToHub()
 
 
@@ -420,12 +420,15 @@ for (let i = 0; i < 3; i++){
     let tempCell = document.createElement("div")
     tempCell.id = cellCount
     tempCell.className = "tttCell"
-    tempCell.style.gridColumn = i+1
-    tempCell.style.gridRow = j+1
+    tempCell.style.gridColumn = j+1
+    tempCell.style.gridRow = i+1
     if (i==0 || i==1)
-      tempCell.style.borderRight = "5px solid black"
-    if (j==0 || j==1)
       tempCell.style.borderBottom = "5px solid black"
+    if (j==0 || j==1)
+      tempCell.style.borderRight = "5px solid black"
+    tempCell.innerText = ''
+
+    tempCell.style.fontSize = "x-large"
         
     playArea.appendChild(tempCell)
     console.log("i,j,tempCell:", i, j, tempCell)
@@ -435,24 +438,40 @@ for (let i = 0; i < 3; i++){
 
 let tttCells = document.body.querySelectorAll(".tttCell")
 console.log(tttCells)
-
+let currentPlayer = 'X'
 createTicTacToeBoard()
 startGame()
 
   function startGame(){
+    currentPlayer = 'X'
     //ToDo: main game loop for TTT
   }
 
   function createTicTacToeBoard(){
-    // ToDo: draw the grid
-    // tttCells[0].style.borderRight = "5px solid black"
-    // tttCells[0].style.borderRight = "5px solid black"
-    // console.log(tttCells[0])
+    for (let i = 0; i<9; i++)
+      tttCells[i].addEventListener("click", () => playerMove(tttCells[i]))
+
+    function playerMove(cell){
+      if(cell.innerText == '')
+        cell.innerText = currentPlayer
+      
+      if(currentPlayer == 'X'){
+        currentPlayer = 'O'
+        topMessage.innerText = "Second Player (O) to go"
+      }
+      else{
+        currentPlayer = 'X'
+        topMessage.innerText = "First Player (X) to go"
+      }
+
+      checkWinner()
+    }
 
   }
 
   function checkWinner(){
     //ToDo: checks if the current player is a winner
+    console.log("inside checkWinner function")
   }
 
 
@@ -470,6 +489,10 @@ startGame()
 
       //make resetBTN hidden; return to hub
       returnToHub.style.visibility = "hidden"
+      for (i=0; i<9; i++){
+      
+        tttCells[i].remove()
+      }
       chooseGame()
     }
   }

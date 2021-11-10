@@ -156,7 +156,7 @@ body {
   position: relative;
   display: flex;
   padding: 5%;
-  padding-bottom: 20px;
+
   width: 100%;
   justify-self: center;
   max-width: 220px;
@@ -178,9 +178,8 @@ body {
   grid-row: 3;
   position: relative;
   display: flex;
-  padding: 5%;
-  padding-top 20px;
   width: 100%;
+  padding: 5%;
   justify-self: center;
   justify-content:center;
   max-width: 220px;
