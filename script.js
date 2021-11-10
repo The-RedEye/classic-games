@@ -28,25 +28,10 @@ playArea.appendChild(simon)
 playArea.appendChild(ticTacToe)
 
 
-chooseGame()
+chooseGame() //clears Hub Board and goes to main gaime function -- last function
 
-function createPlayArea(row,col){
 
-  
-  // grid-row: 2;
-  // grid-column: 2;
-  // display: grid;
-  // left: 20%;
-  // top: 20%;
-  
-  // grid-template-columns: 30% 40% 30%;
-  // grid-template-rows: 30% 40% 30%;
-  // border: 2px dotted darkgrey;
-  // background: silver;
-
-}
-
-function playSimon(){
+function playSimon(){  //Main Simon Game
   let blueSquare   = document.createElement("span")
   let yellowSquare = document.createElement("span")
   let redSquare    = document.createElement("span")
@@ -224,23 +209,12 @@ function modifyReturnToHub(){
 
   function returnFromSimon(){
     center.style.visibility = "hidden"
-    
-    // let redCell = document.body.querySelector(".redCell")
     redCell.style.visibility = "hidden"
-    
-    // let yellowCell = document.body.querySelector(".yellowCell")
     yellowCell.style.visibility = "hidden"
-  
-    
-    // let blueCell = document.body.querySelector(".blueCell")
     blueCell.style.visibility = "hidden"
-  
-    
-    // let greenCell = document.body.querySelector(".greenCell")
     greenCell.style.visibility = "hidden"
-    
-
-    
+    startButton.style.visibility = "hidden"
+ 
     returnToHub.style.visibility = "hidden"
     chooseGame()
   }
@@ -430,19 +404,76 @@ function resetAllColors(){
 
 } // end playSimon function ***MOVE OTHER FUNCTIONS INSIDE***
 
-function playTicTacToe(){
+function playTicTacToe(){ //Main TicTacToe Main TTT Game
 console.log("inside playTicTacToe")
-header.innerText = "Tic-Tac-Toe"
-headerTitle.innerText = "Under construction\n Come back later"
+headerTitle.innerText = "Tic-Tac-Toe"
+topMessage.innerText = "Under construction\n Come back later"
 modifyReturnToHub()
 
 
-function modifyReturnToHub(){
-  console.log("in modifyReturnHub function")
-  //function to display return to hub
-}
+let tttArray = []
+let cellCount = 0
+for (let i = 0; i < 3; i++){
+  tttArray.push([])
+  for (let j = 0; j< 3; j++){
+    tttArray[i].push(cellCount)
+    let tempCell = document.createElement("div")
+    tempCell.id = cellCount
+    tempCell.className = "tttCell"
+    tempCell.style.gridColumn = i+1
+    tempCell.style.gridRow = j+1
+    if (i==0 || i==1)
+      tempCell.style.borderRight = "5px solid black"
+    if (j==0 || j==1)
+      tempCell.style.borderBottom = "5px solid black"
+        
+    playArea.appendChild(tempCell)
+    console.log("i,j,tempCell:", i, j, tempCell)
+    cellCount++
+  }
 }
 
+let tttCells = document.body.querySelectorAll(".tttCell")
+console.log(tttCells)
+
+createTicTacToeBoard()
+startGame()
+
+  function startGame(){
+    //ToDo: main game loop for TTT
+  }
+
+  function createTicTacToeBoard(){
+    // ToDo: draw the grid
+    // tttCells[0].style.borderRight = "5px solid black"
+    // tttCells[0].style.borderRight = "5px solid black"
+    // console.log(tttCells[0])
+
+  }
+
+  function checkWinner(){
+    //ToDo: checks if the current player is a winner
+  }
+
+
+
+
+  function modifyReturnToHub(){
+    //make reset viewable; add click to reset => go to hub
+    console.log("in modifyReturnHub function")
+    returnToHub.style.visibility = "visible"
+    returnToHub.addEventListener("click", returnFromTicTacToe)
+  
+    function returnFromTicTacToe(){
+
+      //ToDo: make all elements in tictactoe invisible
+
+      //make resetBTN hidden; return to hub
+      returnToHub.style.visibility = "hidden"
+      chooseGame()
+    }
+  }
+}
 
 function chooseGame(){
   

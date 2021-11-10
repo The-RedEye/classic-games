@@ -28,7 +28,7 @@ body {
   grid-column: 1;
   grid-row: 2;
   /* position: absolute; */
-  border: 5px solid black;
+  border: 5px groove silver;
   margin: 0 auto;
   height:60%;
   width: 60%;
@@ -42,7 +42,7 @@ body {
   grid-column: 3;
   grid-row: 2;
   right: 10px;
-  border: 5px solid black;
+  border: 5px groove silver;
   margin: 0 auto;
   height:60%;
   width: 60%;
@@ -59,7 +59,7 @@ body {
   
   grid-template-columns: 30% 40% 30%;
   grid-template-rows: 30% 40% 30%;
-  border: 2px dotted darkgrey;
+  border: 4px groove darkgrey;
   background: silver;
 
 }
