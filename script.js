@@ -6,6 +6,8 @@ let topMessage = document.body.querySelector(".topMessage")
 let headerTitle = document.body.querySelector(".header-title")
 let footer = document.body.querySelector(".footer")
 
+let lineBreak = document.createElement("br")
+
 let gameChoice = ""
 let returnToHub = document.body.querySelector(".returnToHub")
 
@@ -28,8 +30,8 @@ playArea.appendChild(simon)
 playArea.appendChild(ticTacToe)
 
 
-chooseGame() //clears Hub Board and goes to main gaime function -- last function
 
+chooseGame() //clears Hub Board and goes to main gaime function -- last function
 
 function playSimon(){  //Main Simon Game
   let blueSquare   = document.createElement("span")
@@ -43,6 +45,10 @@ function playSimon(){  //Main Simon Game
   let blueCell = document.createElement("div")
   let greenCell = document.createElement("div")
   
+  let currentScoreTitle = document.createElement("div")
+  let currentScore = document.createElement("div")
+  let highScoreTitle = document.createElement("div")
+  let highScore = document.createElement("div")
 
   let center      = document.createElement("span")
   let startButton = document.createElement("button")
@@ -74,15 +80,17 @@ function playSimon(){  //Main Simon Game
   let level = 1
   let timer = 0
   let time = 10
+  let highScoreValue = 0
 
 function startGame(){
- 
+  resetHistory()
 
   if (reset==true){
     simonPattern = []
     startButton.style.visibility="hidden"
     reset = false
   }
+  currentScore.innerText = playerPattern.length
   console.log(`lvl${level}`)
   topMessage.innerText = ""
   centerMessage.innerText = `Level ${level} \nShowing Pattern`
@@ -128,6 +136,34 @@ function createSimonBoard(){
   leftUI.style.visibility = "visible"
   rightUI.style.visibility = "visible"
 
+  leftUI.innerText = "Your Pattern:"
+  rightUI.innerText = ""
+
+  
+  currentScoreTitle.innerText = "Current Score:"
+  
+  currentScore.innerText = "0"
+  console.log(currentScoreTitle)
+  rightUI.appendChild(currentScoreTitle)
+  rightUI.appendChild(currentScore)
+
+  rightUI.appendChild(lineBreak)
+
+  
+  highScoreTitle.innerText = "High Score:"
+  
+  highScore.innerText = "0"
+  rightUI.appendChild(highScoreTitle)
+  rightUI.appendChild(highScore)
+
+
+
+
+}
+
+function resetHistory(){
+  leftUI.innerHTML = ""
+  leftUI.innerText = "Your Pattern:"
 }
 
 function activateSimonBoard(){
@@ -170,6 +206,7 @@ function displayPattern(pattern){
   console.log("simonPattern Length:", pattern.length)
   center.style.background = "slategrey"
   listen = false
+  disableListen()
   clearTimeout(timer)
   time = 10
   timeDisplay.innerText="\n10 second(s)"
@@ -201,7 +238,22 @@ function displayPattern(pattern){
 
   }
  timer = setTimeout(beginTimer, pauseInputTimer)
+ setTimeout(enableListen, pauseInputTimer)
   
+}
+
+function disableListen(){
+  redSquare.removeEventListener("click", clickRed)
+  blueSquare.removeEventListener("click", clickBlue)
+  greenSquare.removeEventListener("click", clickGreen)
+  yellowSquare.removeEventListener("click", clickYellow)
+}
+
+function enableListen(){
+  redSquare.addEventListener("click", clickRed)
+  blueSquare.addEventListener("click", clickBlue)
+  greenSquare.addEventListener("click", clickGreen)
+  yellowSquare.addEventListener("click", clickYellow)
 }
 
 function modifyReturnToHub(){
@@ -218,6 +270,8 @@ function modifyReturnToHub(){
     startButton.style.visibility = "hidden"
     leftUI.style.visibility = "hidden"
     rightUI.style.visibility = "hidden"
+    leftUI.innerHTML = ""
+    rightUI.innerHTML = ""
  
     returnToHub.style.visibility = "hidden"
     chooseGame()
@@ -273,12 +327,19 @@ function gameOver(){
   startButton.style.visibility="visible"
   clearTimeout(timer)
   timeDisplay.innerText=""
+  currentScore.innerText = playerPattern.length
+  
+  if(parseInt(currentScore.innerText)> highScoreValue){
+    highScoreValue = playerPattern.length
+    highScore.innerText = highScoreValue
+  }
 }
 
 function clickRed(){
   
   if (listen == true && playerPattern.length<=simonPattern.length){
     playerPattern.push('red')
+    addPatternHistory('Red')
     redSquare.style.background = "red"
     redSquare.style.border = "10px double silver"
     redSquare.style.padding = "10px"
@@ -299,6 +360,7 @@ function clickGreen(){
   
   if (listen==true){
     playerPattern.push('green')
+    addPatternHistory('Green')
     greenSquare.style.background = "greenyellow"
     greenSquare.style.border = "10px double silver"
     greenSquare.style.padding = "10px"
@@ -318,6 +380,7 @@ function clickBlue(){
 
   if (listen == true){
     playerPattern.push('blue')
+    addPatternHistory('Blue')
     blueSquare.style.background = "skyblue"
     blueSquare.style.border = "10px double silver"
     blueSquare.style.padding = "10px"
@@ -337,6 +400,7 @@ function clickYellow(){
   
   if (listen == true){
     playerPattern.push('yellow')
+    addPatternHistory('Yellow')
     yellowSquare.style.background = "yellow"
     yellowSquare.style.border = "10px double silver"
     yellowSquare.style.padding = "10px"
@@ -350,6 +414,21 @@ function clickYellow(){
     isCorrect() 
 
   
+}
+
+function addPatternHistory(color){
+  let newColor = document.createElement("div")
+  newColor.innerText = color
+  if(color == 'Red')
+    newColor.style.color = "red"
+  if(color == 'Blue')
+    newColor.style.color = "blue"
+  if(color == 'Green')
+    newColor.style.color = "green"
+  if(color == 'Yellow')
+    newColor.style.color = "goldenrod"
+
+leftUI.appendChild(newColor)
 }
 
 function highlightRed(){

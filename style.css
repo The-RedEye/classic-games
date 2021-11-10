@@ -25,29 +25,36 @@ body {
 
 .leftUI{
   visibility: hidden;
+  font-size: larger;
   left: 10px;
   grid-column: 1;
   grid-row: 2;
   border: 5px groove silver;
   margin: 0 auto;
-  height:60%;
-  width: 60%;
+  height: 60%;
+  width: 75%;
   top: 20%;
   bottom: 10%;
+  padding: 2%;
 
 }
 
 .rightUI{
   visibility: hidden;
+  font-size: larger;
   grid-column: 3;
   grid-row: 2;
   right: 10px;
   border: 5px groove silver;
   margin: 0 auto;
   height:60%;
-  width: 60%;
+  width: 75%;
   top: 20%;
   bottom: 10%;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
 }
 
 .playArea{
@@ -56,7 +63,7 @@ body {
   display: grid;
   left: 20%;
   top: 20%;
-  
+  padding: 1%;
   grid-template-columns: 30% 40% 30%;
   grid-template-rows: 30% 40% 30%;
   border: 4px groove darkgrey;
