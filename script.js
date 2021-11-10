@@ -33,7 +33,7 @@ playArea.appendChild(ticTacToe)
 
 chooseGame() //clears Hub Board and goes to main gaime function -- last function
 
-function playSimon(){  //Main Simon Game
+function playSimon(){  //Main Simon Main Game
   let blueSquare   = document.createElement("span")
   let yellowSquare = document.createElement("span")
   let redSquare    = document.createElement("span")
@@ -485,143 +485,159 @@ function resetAllColors(){
 
 
 
-} // end playSimon function ***MOVE OTHER FUNCTIONS INSIDE***
+} // end playSimon function (Main function)
 
 function playTicTacToe(){ //Main TicTacToe Main TTT Game
-console.log("inside playTicTacToe")
-headerTitle.innerText = "Tic-Tac-Toe"
-topMessage.innerText = "First Player (X) to go"
-modifyReturnToHub()
+  console.log("inside playTicTacToe")
+  headerTitle.innerText = "Tic-Tac-Toe"
+  topMessage.innerText = "First Player (X) to go"
+  modifyReturnToHub()
 
-
-let tttArray = []
-let cellCount = 0
-for (let i = 0; i < 3; i++){
-  tttArray.push([])
-  for (let j = 0; j< 3; j++){
-    tttArray[i].push(cellCount)
-    let tempCell = document.createElement("div")
-    tempCell.id = cellCount
-    tempCell.className = "tttCell"
-    tempCell.style.gridColumn = j+1
-    tempCell.style.gridRow = i+1
-    if (i==0 || i==1)
-      tempCell.style.borderBottom = "5px solid black"
-    if (j==0 || j==1)
-      tempCell.style.borderRight = "5px solid black"
-    tempCell.innerText = ''
-
-    tempCell.style.fontSize = "x-large"
-        
-    playArea.appendChild(tempCell)
-    console.log("i,j,tempCell:", i, j, tempCell)
-    cellCount++
-  }
-}
-
-let tttCells = document.body.querySelectorAll(".tttCell")
-console.log(tttCells)
-let currentPlayer = 'X'
-createTicTacToeBoard()
-startGame()
-
-  function startGame(){
-    currentPlayer = 'X'
-    //ToDo: main game loop for TTT
-  }
-
-  function createTicTacToeBoard(){
-    for (let i = 0; i<9; i++)
-      tttCells[i].addEventListener("click", () => playerMove(tttCells[i]))
-
-    leftUI.style.visibility = "visible"
-    rightUI.style.visibility = "visible"
-    //create playAgain Button add listen function
-
-    function playerMove(cell){
-      if(cell.innerText == ''){
-        cell.innerText = currentPlayer
-        if(currentPlayer == 'X'){
-          currentPlayer = 'O'
-          topMessage.innerText = "Second Player (O) to go"
-        }
-        else{
-          currentPlayer = 'X'
-          topMessage.innerText = "First Player (X) to go"
-        }
-      }
-
-      checkWinner()
-    }
-
-  }
-
-  function checkWinner(){
-    //ToDo: checks if the current player is a winner
-    let winnerFound = false
-    console.log("inside checkWinner function")
-    if (winnerFound == true)
-      showPlayAgain()
-  }
-
-  function showPlayAgain(){
-    console.log("inside showPlayAgain")
-    //change visibility of playAgain Button
-  }
-
-
-  function modifyReturnToHub(){
-    //make reset viewable; add click to reset => go to hub
-    console.log("in modifyReturnHub function")
-    returnToHub.style.visibility = "visible"
-    returnToHub.addEventListener("click", returnFromTicTacToe)
+  let tttArray = []
+  let cellCount = 0
+  let TicTacToeArea = document.body.querySelector("#ticTacToeArea")
   
-    function returnFromTicTacToe(){ //has bugs
-
-      //make resetBTN hidden; return to hub
-      returnToHub.style.visibility = "hidden"
-      for (i=0; i<9; i++){
-        tttCells[i].style.borderBottom = null
-        tttCells[i].style.borderRight = null
-        tttCells[i].remove()
-      }
-      leftUI.style.visibility = "hidden"
-      rightUI.style.visibility = "hidden"
-      chooseGame()
+  for (let i = 0; i < 3; i++){
+    tttArray.push([])
+    for (let j = 0; j< 3; j++){
+      tttArray[i].push(cellCount)
+      let tempCell = document.createElement("div")
+        tempCell.id = cellCount
+        tempCell.className = "tttCell"
+        tempCell.style.gridColumn = j+1
+        tempCell.style.gridRow = i+1
+        tempCell.innerText = ''
+        tempCell.style.fontSize = "x-large"
+      if (i==0 || i==1)
+        tempCell.style.borderBottom = "5px solid black"
+      if (j==0 || j==1)
+        tempCell.style.borderRight = "5px solid black"
+      
+      playArea.appendChild(tempCell)
+      cellCount++
     }
   }
-}
+  playArea.appendChild(ticTacToeArea)
+  console.log("playArea after creating cells:", playArea)
+  let tttCells = document.body.querySelectorAll(".tttCell")
+  console.log(tttCells)
+  let currentPlayer = 'X'
+  createTicTacToeBoard()
+  startGame()
 
-function chooseGame(){
-  
-  createHub()
+    function startGame(){
+      currentPlayer = 'X'
+      //ToDo: main game loop for TTT
+    }
 
-  function createHub(){
-    simon.style.visibility     = "visible"
-    ticTacToe.style.visibility = "visible"
+    function createTicTacToeBoard(){
+      for (let i = 0; i<9; i++)
+        tttCells[i].addEventListener("click", () => playerMove(tttCells[i]))
+
+      leftUI.style.visibility = "visible"
+      rightUI.style.visibility = "visible"
+      //create playAgain Button add listen function
+
+      function playerMove(cell){
+        if(cell.innerText == ''){
+          cell.innerText = currentPlayer
+          if(currentPlayer == 'X'){
+            currentPlayer = 'O'
+            topMessage.innerText = "Second Player (O) to go"
+          }
+          else{
+            currentPlayer = 'X'
+            topMessage.innerText = "First Player (X) to go"
+          }
+        }
+
+        checkWinner()
+      }
+    }
+
+    function checkWinner(){
+      //ToDo: checks if the current player is a winner
+      let winnerFound = false
+      console.log("inside checkWinner function")
+      if (winnerFound == true)
+        showPlayAgain()
+    }
+
+    function showPlayAgain(){
+      console.log("inside showPlayAgain")
+      //change visibility of playAgain Button
+    }
+
+
+    function modifyReturnToHub(){
+      //make reset viewable; add click to reset => go to hub
+      console.log("in modifyReturnHub function")
+      returnToHub.style.visibility = "visible"
+      returnToHub.addEventListener("click", returnFromTicTacToe)
     
-    simon.addEventListener("click", () => startSimon())
-    ticTacToe.addEventListener("click", () => startTicTacToe())
+      function returnFromTicTacToe(){ //has bugs
+        console.log("playArea before removing cells:", playArea)
+        //make resetBTN hidden; return to hub
+        returnToHub.style.visibility = "hidden"
+        for (let i=0; i<9; i++){
+          console.log(tttCells[i])
+          tttCells[i].style.borderBottom = null
+          tttCells[i].style.borderRight = null
+          tttCells[i].outerHTML = ""
+          tttCells[i].remove()
 
-  }
+        }
+        ticTacToeArea.innerHTML = ""        
+        tttCells = null
+        leftUI.style.visibility = "hidden"
+        rightUI.style.visibility = "hidden"
+        chooseGame()
+      }
+    }
+}// end of playTicTacToe function (Main function)
 
-  function startSimon(){
-    clearHub()
-    gameChoice = "simon"
-    playSimon()
-  }
+function playChess(){
+  modifyReturnToHub()
 
-  function startTicTacToe(){
-    clearHub()
-    gameChoice = "ticTacToe"
-    playTicTacToe()
-  }
 
-  function clearHub(){
-    simon.style.visibility     = "hidden"
-    ticTacToe.style.visibility = "hidden"
-    simon.removeEventListener("click", startSimon)
-    ticTacToe.removeEventListener("click", startTicTacToe)
-    //clear all parts of hub
+  function modifyReturnToHub{
+    console.log("inside modifyReturnToHub(Chess) function")
   }
+}
+
+  function chooseGame(){
+    
+    createHub()
+
+    function createHub(){
+      simon.style.visibility     = "visible"
+      ticTacToe.style.visibility = "visible"
+      
+      simon.addEventListener("click", startSimon)
+      ticTacToe.addEventListener("click", startTicTacToe)
+
+    }
+
+    function startSimon(){
+      clearHub()
+      gameChoice = "simon"
+      playSimon()
+    }
+
+    function startTicTacToe(){
+      clearHub()
+      gameChoice = "ticTacToe"
+      playTicTacToe()
+    }
+
+    function clearHub(){
+      console.log("in clear Hub function")
+      simon.style.visibility     = "hidden"
+      ticTacToe.style.visibility = "hidden"
+      simon.removeEventListener("click", startSimon)
+      ticTacToe.removeEventListener("click", startTicTacToe)
+      console.log("simon logo:" , simon)
+      console.log("TTTlogo:" , ticTacToe)
+      //clear all parts of hub
+    }
 }
