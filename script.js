@@ -80,408 +80,406 @@ function playSimon(){  //Main Simon Main Game
   let time = 10
   let highScoreValue = 0
 
-function startGame(){
-  resetHistory()
+  function startGame(){
+    resetHistory()
 
-  if (reset==true){
-    simonPattern = []
-    startButton.style.visibility="hidden"
-    reset = false
-  }
-  currentScore.innerText = playerPattern.length
-  console.log(`lvl${level}`)
-  topMessage.innerText = ""
-  centerMessage.innerText = `Level ${level} \nShowing Pattern`
-  playerPattern = []
+    if (reset==true){
+      simonPattern = []
+      startButton.style.visibility="hidden"
+      reset = false
+    }
+    currentScore.innerText = playerPattern.length
+    console.log(`lvl${level}`)
+    topMessage.innerText = ""
+    centerMessage.innerText = `Level ${level} \nShowing Pattern`
+    playerPattern = []
 
-  simonPattern.push(getColor())
-  console.log("simonPattern:" , simonPattern)
-  displayPattern(simonPattern)
+    simonPattern.push(getColor())
+    console.log("simonPattern:" , simonPattern)
+    displayPattern(simonPattern)
 
-}
-
-function createSimonBoard(){
-  console.log("inside CreateSimonBoard function")
-
-  playArea.appendChild(center)
-  center.className="centerSquare"
-  center.style.fontSize = "Large"
-
-  redCell.className = "redCell"
-  redCell.appendChild(redSquare)
-  redSquare.className="redSquare"
-  playArea.appendChild(redCell)
-  
-  yellowCell.className = "yellowCell"
-  yellowCell.appendChild(yellowSquare)
-  playArea.appendChild(yellowCell)
-  yellowSquare.className="yellowSquare"
-  
-  blueCell.className = "blueCell"
-  blueCell.appendChild(blueSquare)
-  playArea.appendChild(blueCell)
-  blueSquare.className="blueSquare"
-
-  greenCell.className = "greenCell"
-  greenCell.appendChild(greenSquare)
-  playArea.appendChild(greenCell)
-  greenSquare.className="greenSquare"
-  
-  redCell.style.visiblity = "visible"
-  yellowCell.style.visiblity = "visible"
-  blueCell.style.visiblity = "visible"
-  greenCell.style.visiblity = "visible"
-  leftUI.style.visibility = "visible"
-  rightUI.style.visibility = "visible"
-
-  leftUI.innerText = "Your Pattern:"
-  rightUI.innerText = ""
-
-  
-  currentScoreTitle.innerText = "Current Score:"
-  
-  currentScore.innerText = "0"
-  console.log(currentScoreTitle)
-  rightUI.appendChild(currentScoreTitle)
-  rightUI.appendChild(currentScore)
-
-  rightUI.appendChild(lineBreak)
-
-  
-  highScoreTitle.innerText = "High Score:"
-  
-  highScore.innerText = "0"
-  rightUI.appendChild(highScoreTitle)
-  rightUI.appendChild(highScore)
-
-
-
-
-}
-
-function resetHistory(){
-  leftUI.innerHTML = ""
-  leftUI.innerText = "Your Pattern:"
-}
-
-function activateSimonBoard(){
-  console.log("inside activateSimonBoard function")
-  //creates event listeners for Simon colors
-  center.style.visibility = "visible"
-
-  redSquare.addEventListener("click", clickRed)
-  redSquare.addEventListener("mouseover", highlightRed)
-  redSquare.addEventListener("mouseleave", resetRed)
-  
-  yellowSquare.addEventListener("click", clickYellow)
-  yellowSquare.addEventListener("mouseover", highlightYellow)
-  yellowSquare.addEventListener("mouseleave", resetYellow)
-  
-  blueSquare.addEventListener("click", clickBlue)
-  blueSquare.addEventListener("mouseover", highlightBlue)
-  blueSquare.addEventListener("mouseleave", resetBlue)
-  
-  greenSquare.addEventListener("click", clickGreen)
-  greenSquare.addEventListener("mouseover", highlightGreen)
-  greenSquare.addEventListener("mouseleave", resetGreen)
   }
 
-function getColor(){
-  rand = Math.floor(Math.random()*4)
-  console.log(`color value found: ${rand}`)
-  if(rand == 0)
-    return 'yellow'
-  else if (rand == 1)
-    return 'red'
-  else if (rand == 2)
-    return 'blue'
-  else
-    return 'green'
-}
+  function createSimonBoard(){
+    console.log("inside CreateSimonBoard function")
 
-function displayPattern(pattern){
-  console.log("inside of displayPattern function")
-  console.log("simonPattern Length:", pattern.length)
-  center.style.background = "slategrey"
-  listen = false
-  disableListen()
-  clearTimeout(timer)
-  time = 10
-  timeDisplay.innerText="\n10 second(s)"
-  resetAllColors()
-  console.log("listening:", listen)
-  let pauseInputTimer = ( (pattern.length*1500)-500)
+    playArea.appendChild(center)
+    center.className="centerSquare"
+    center.style.fontSize = "Large"
 
-  setTimeout(() => listen = true, pauseInputTimer)
-  setTimeout(() => center.style.background = "slateblue", pauseInputTimer)
-  setTimeout(() => centerMessage.innerText = `Level ${level} \n Your Turn!`, pauseInputTimer)
-  for (i = 0; i < pattern.length; i++){
-    console.log("patternLength:", pattern)
-    if (pattern[i]=="red"){
-      setTimeout(() => highlightRed(), (i*1000) )
-      setTimeout(() => resetRed(), (i*1000) + 500)
-    }
-    else if(pattern[i]=="green"){
-      setTimeout(() => highlightGreen(), (i*1000) )
-      setTimeout(() => resetGreen(), (i*1000) + 500)
-    }
-    else if(pattern[i]=="blue"){
-      setTimeout(() => highlightBlue(), (i*1000) )
-      setTimeout(() => resetBlue(), (i*1000) + 500)
-    }
-    else {
-      setTimeout(() => highlightYellow(), (i*1000) )
-      setTimeout(() => resetYellow(), (i*1000) + 500)
-    }
+    redCell.className = "redCell"
+    redCell.appendChild(redSquare)
+    redSquare.className="redSquare"
+    playArea.appendChild(redCell)
+    
+    yellowCell.className = "yellowCell"
+    yellowCell.appendChild(yellowSquare)
+    playArea.appendChild(yellowCell)
+    yellowSquare.className="yellowSquare"
+    
+    blueCell.className = "blueCell"
+    blueCell.appendChild(blueSquare)
+    playArea.appendChild(blueCell)
+    blueSquare.className="blueSquare"
+
+    greenCell.className = "greenCell"
+    greenCell.appendChild(greenSquare)
+    playArea.appendChild(greenCell)
+    greenSquare.className="greenSquare"
+    
+    redCell.style.visiblity = "visible"
+    yellowCell.style.visiblity = "visible"
+    blueCell.style.visiblity = "visible"
+    greenCell.style.visiblity = "visible"
+    leftUI.style.visibility = "visible"
+    rightUI.style.visibility = "visible"
+
+    leftUI.innerText = "Your Pattern:"
+    rightUI.innerText = ""
+
+    
+    currentScoreTitle.innerText = "Current Score:"
+    
+    currentScore.innerText = "0"
+    console.log(currentScoreTitle)
+    rightUI.appendChild(currentScoreTitle)
+    rightUI.appendChild(currentScore)
+
+    rightUI.appendChild(lineBreak)
+
+    
+    highScoreTitle.innerText = "High Score:"
+    
+    highScore.innerText = "0"
+    rightUI.appendChild(highScoreTitle)
+    rightUI.appendChild(highScore)
+
+
+
 
   }
- timer = setTimeout(beginTimer, pauseInputTimer)
- setTimeout(enableListen, pauseInputTimer)
-  
-}
 
-function disableListen(){
-  redSquare.removeEventListener("click", clickRed)
-  blueSquare.removeEventListener("click", clickBlue)
-  greenSquare.removeEventListener("click", clickGreen)
-  yellowSquare.removeEventListener("click", clickYellow)
-}
-
-function enableListen(){
-  redSquare.addEventListener("click", clickRed)
-  blueSquare.addEventListener("click", clickBlue)
-  greenSquare.addEventListener("click", clickGreen)
-  yellowSquare.addEventListener("click", clickYellow)
-}
-
-function modifyReturnToHub(){
-  console.log("in returnToHub function")
-  returnToHub.style.visibility = "visible"
-  returnToHub.addEventListener("click", returnFromSimon)
-
-  function returnFromSimon(){
-    center.style.visibility = "hidden"
-    redCell.style.visibility = "hidden"
-    yellowCell.style.visibility = "hidden"
-    blueCell.style.visibility = "hidden"
-    greenCell.style.visibility = "hidden"
-    startButton.style.visibility = "hidden"
-    leftUI.style.visibility = "hidden"
-    rightUI.style.visibility = "hidden"
+  function resetHistory(){
     leftUI.innerHTML = ""
-    rightUI.innerHTML = ""
- 
-    returnToHub.style.visibility = "hidden"
-    chooseGame()
+    leftUI.innerText = "Your Pattern:"
   }
 
-}
+  function activateSimonBoard(){
+    console.log("inside activateSimonBoard function")
+    //creates event listeners for Simon colors
+    center.style.visibility = "visible"
 
-function beginTimer(){
-  
-  timer = setInterval(updateTime, 1000)
-
-  function updateTime() {
-    if (time>0){
-      time -=1
-      timeDisplay.innerText= `\n${time} second(s)`
+    redSquare.addEventListener("click", clickRed)
+    redSquare.addEventListener("mouseover", highlightRed)
+    redSquare.addEventListener("mouseleave", resetRed)
+    
+    yellowSquare.addEventListener("click", clickYellow)
+    yellowSquare.addEventListener("mouseover", highlightYellow)
+    yellowSquare.addEventListener("mouseleave", resetYellow)
+    
+    blueSquare.addEventListener("click", clickBlue)
+    blueSquare.addEventListener("mouseover", highlightBlue)
+    blueSquare.addEventListener("mouseleave", resetBlue)
+    
+    greenSquare.addEventListener("click", clickGreen)
+    greenSquare.addEventListener("mouseover", highlightGreen)
+    greenSquare.addEventListener("mouseleave", resetGreen)
     }
-    if (time<=0){
-      timeDisplay.innerText=""
-      gameOver()
-    }
+
+  function getColor(){
+    rand = Math.floor(Math.random()*4)
+    console.log(`color value found: ${rand}`)
+    if(rand == 0)
+      return 'yellow'
+    else if (rand == 1)
+      return 'red'
+    else if (rand == 2)
+      return 'blue'
+    else
+      return 'green'
   }
 
-}
-
-function isCorrect(){
-  console.log("in isCorrect function")
-  let check = true
-  for (let i = 0; i< simonPattern.length; i++){
-    if (simonPattern[i] != playerPattern[i])
-      check = false
-  }
-
-  if (check == false)
-    gameOver()
-  else{
-    topMessage.innerText = `Level ${level} complete!`
-    centerMessage.innerText = `Level ${level} complete! \n \nStarting next level in 3 seconds`
-    level +=1
+  function displayPattern(pattern){
+    console.log("inside of displayPattern function")
+    console.log("simonPattern Length:", pattern.length)
+    center.style.background = "slategrey"
     listen = false
+    disableListen()
     clearTimeout(timer)
-    timeDisplay.innerText=""
-    setTimeout(startGame, 3000)
-  }
-  
-}
+    time = 10
+    timeDisplay.innerText="\n10 second(s)"
+    resetAllColors()
+    console.log("listening:", listen)
+    let pauseInputTimer = ( (pattern.length*1500)-500)
 
-function gameOver(){
-  console.log("in gameOver Function")
-  topMessage.innerText = 'Game Over'
-  centerMessage.innerText = '\nWrong Pattern \nGame Over'
-  reset = true
-  level = 1
-  startButton.style.visibility="visible"
-  clearTimeout(timer)
-  timeDisplay.innerText=""
-  currentScore.innerText = playerPattern.length
-  
-  if(parseInt(currentScore.innerText)> highScoreValue){
-    highScoreValue = playerPattern.length
-    highScore.innerText = highScoreValue
-  }
-}
+    setTimeout(() => listen = true, pauseInputTimer)
+    setTimeout(() => center.style.background = "slateblue", pauseInputTimer)
+    setTimeout(() => centerMessage.innerText = `Level ${level} \n Your Turn!`, pauseInputTimer)
+    for (i = 0; i < pattern.length; i++){
+      console.log("patternLength:", pattern)
+      if (pattern[i]=="red"){
+        setTimeout(() => highlightRed(), (i*1000) )
+        setTimeout(() => resetRed(), (i*1000) + 500)
+      }
+      else if(pattern[i]=="green"){
+        setTimeout(() => highlightGreen(), (i*1000) )
+        setTimeout(() => resetGreen(), (i*1000) + 500)
+      }
+      else if(pattern[i]=="blue"){
+        setTimeout(() => highlightBlue(), (i*1000) )
+        setTimeout(() => resetBlue(), (i*1000) + 500)
+      }
+      else {
+        setTimeout(() => highlightYellow(), (i*1000) )
+        setTimeout(() => resetYellow(), (i*1000) + 500)
+      }
 
-function clickRed(){
-  
-  if (listen == true && playerPattern.length<=simonPattern.length){
-    playerPattern.push('red')
-    addPatternHistory('Red')
-    redSquare.style.background = "red"
-    redSquare.style.border = "10px double silver"
-    redSquare.style.padding = "10px"
-    setTimeout(resetRed, 300)
+    }
+  timer = setTimeout(beginTimer, pauseInputTimer)
+  setTimeout(enableListen, pauseInputTimer)
     
   }
 
-  if (listen == false)
-   centerMessage.innerText +="\n !WAIT FOR YOUR TURN!"
-
-  if (playerPattern.length >= simonPattern.length)
-    isCorrect() 
-
-}
-
-function clickGreen(){
-  console.log("Green Clicked")
-  
-  if (listen==true){
-    playerPattern.push('green')
-    addPatternHistory('Green')
-    greenSquare.style.background = "greenyellow"
-    greenSquare.style.border = "10px double silver"
-    greenSquare.style.padding = "10px"
-    setTimeout(resetRed, 300)
+  function disableListen(){
+    redSquare.removeEventListener("click", clickRed)
+    blueSquare.removeEventListener("click", clickBlue)
+    greenSquare.removeEventListener("click", clickGreen)
+    yellowSquare.removeEventListener("click", clickYellow)
   }
 
-  if (listen == false)
-   centerMessage.innerText +="\n\n !WAIT FOR YOUR TURN!"
-
-  if (playerPattern.length >= simonPattern.length)
-    isCorrect() 
-
-}
-
-function clickBlue(){
-  console.log("Blue Clicked")
-
-  if (listen == true){
-    playerPattern.push('blue')
-    addPatternHistory('Blue')
-    blueSquare.style.background = "skyblue"
-    blueSquare.style.border = "10px double silver"
-    blueSquare.style.padding = "10px"
-    setTimeout(resetBlue, 300)
+  function enableListen(){
+    redSquare.addEventListener("click", clickRed)
+    blueSquare.addEventListener("click", clickBlue)
+    greenSquare.addEventListener("click", clickGreen)
+    yellowSquare.addEventListener("click", clickYellow)
   }
 
-  if (listen == false)
-   centerMessage.innerText +="\n\n !WAIT FOR YOUR TURN!"
+  function modifyReturnToHub(){//Simon
+    console.log("in returnToHub function")
+    returnToHub.style.visibility = "visible"
+    returnToHub.addEventListener("click", returnFromSimon)
 
-  if (playerPattern.length >= simonPattern.length)
-    isCorrect() 
-
-}
-
-function clickYellow(){
-  console.log("Yellow Clicked")
+    function returnFromSimon(){
+      center.style.visibility = "hidden"
+      redCell.style.visibility = "hidden"
+      yellowCell.style.visibility = "hidden"
+      blueCell.style.visibility = "hidden"
+      greenCell.style.visibility = "hidden"
+      startButton.style.visibility = "hidden"
+      leftUI.style.visibility = "hidden"
+      rightUI.style.visibility = "hidden"
+      leftUI.innerHTML = ""
+      rightUI.innerHTML = ""
+      startButton.style.visibility = "hidden"
   
-  if (listen == true){
-    playerPattern.push('yellow')
-    addPatternHistory('Yellow')
+      returnToHub.style.visibility = "hidden"
+      chooseGame()
+    }
+
+  }
+
+  function beginTimer(){
+    
+    timer = setInterval(updateTime, 1000)
+
+    function updateTime() {
+      if (time>0){
+        time -=1
+        timeDisplay.innerText= `\n${time} second(s)`
+      }
+      if (time<=0){
+        timeDisplay.innerText=""
+        gameOver()
+      }
+    }
+
+  }
+
+  function isCorrect(){//Simon
+    console.log("in isCorrect function")
+    let check = true
+    for (let i = 0; i< simonPattern.length; i++){
+      if (simonPattern[i] != playerPattern[i])
+        check = false
+    }
+
+    if (check == false)
+      gameOver()
+    else{
+      topMessage.innerText = `Level ${level} complete!`
+      centerMessage.innerText = `Level ${level} complete! \n \nStarting next level in 3 seconds`
+      level +=1
+      listen = false
+      clearTimeout(timer)
+      timeDisplay.innerText=""
+      setTimeout(startGame, 3000)
+    }
+    
+  }
+
+  function gameOver(){//Simon
+    console.log("in gameOver Function")
+    topMessage.innerText = 'Game Over'
+    centerMessage.innerText = '\nWrong Pattern \nGame Over'
+    reset = true
+    level = 1
+    startButton.style.visibility="visible"
+    clearTimeout(timer)
+    timeDisplay.innerText=""
+    currentScore.innerText = playerPattern.length
+    
+    if(parseInt(currentScore.innerText)> highScoreValue){
+      highScoreValue = playerPattern.length
+      highScore.innerText = highScoreValue
+    }
+  }
+
+  function clickRed(){
+    
+    if (listen == true && playerPattern.length<=simonPattern.length){
+      playerPattern.push('red')
+      addPatternHistory('Red')
+      redSquare.style.background = "red"
+      redSquare.style.border = "10px double silver"
+      redSquare.style.padding = "10px"
+      setTimeout(resetRed, 300)
+      
+    }
+
+    if (listen == false)
+    centerMessage.innerText +="\n !WAIT FOR YOUR TURN!"
+
+    if (playerPattern.length >= simonPattern.length)
+      isCorrect() 
+
+  }
+
+  function clickGreen(){
+    console.log("Green Clicked")
+    
+    if (listen==true){
+      playerPattern.push('green')
+      addPatternHistory('Green')
+      greenSquare.style.background = "greenyellow"
+      greenSquare.style.border = "10px double silver"
+      greenSquare.style.padding = "10px"
+      setTimeout(resetRed, 300)
+    }
+
+    if (listen == false)
+    centerMessage.innerText +="\n\n !WAIT FOR YOUR TURN!"
+
+    if (playerPattern.length >= simonPattern.length)
+      isCorrect() 
+
+  }
+
+  function clickBlue(){
+    console.log("Blue Clicked")
+
+    if (listen == true){
+      playerPattern.push('blue')
+      addPatternHistory('Blue')
+      blueSquare.style.background = "skyblue"
+      blueSquare.style.border = "10px double silver"
+      blueSquare.style.padding = "10px"
+      setTimeout(resetBlue, 300)
+    }
+
+    if (listen == false)
+    centerMessage.innerText +="\n\n !WAIT FOR YOUR TURN!"
+
+    if (playerPattern.length >= simonPattern.length)
+      isCorrect() 
+
+  }
+
+  function clickYellow(){
+    console.log("Yellow Clicked")
+    
+    if (listen == true){
+      playerPattern.push('yellow')
+      addPatternHistory('Yellow')
+      yellowSquare.style.background = "yellow"
+      yellowSquare.style.border = "10px double silver"
+      yellowSquare.style.padding = "10px"
+      setTimeout(resetYellow, 300)
+    }
+
+    if (listen == false)
+    centerMessage.innerText +="\n\n !WAIT FOR YOUR TURN!"
+
+    if (playerPattern.length >= simonPattern.length)
+      isCorrect() 
+
+    
+  }
+
+  function addPatternHistory(color){
+    let newColor = document.createElement("div")
+    newColor.innerText = color
+    if(color == 'Red')
+      newColor.style.color = "red"
+    if(color == 'Blue')
+      newColor.style.color = "blue"
+    if(color == 'Green')
+      newColor.style.color = "green"
+    if(color == 'Yellow')
+      newColor.style.color = "goldenrod"
+
+  leftUI.appendChild(newColor)
+  }
+
+  function highlightRed(){
+    
+      redSquare.style.background = "red"
+  }
+
+  function highlightYellow(){
+    
     yellowSquare.style.background = "yellow"
-    yellowSquare.style.border = "10px double silver"
-    yellowSquare.style.padding = "10px"
-    setTimeout(resetYellow, 300)
   }
 
-  if (listen == false)
-   centerMessage.innerText +="\n\n !WAIT FOR YOUR TURN!"
+  function highlightGreen(){
+    
+      greenSquare.style.background = "greenyellow"
+  }
 
-  if (playerPattern.length >= simonPattern.length)
-    isCorrect() 
+  function highlightBlue(){
+    
+      blueSquare.style.background = "skyblue"
+  }
 
-  
-}
+  function resetRed(){
+    redSquare.style.background = "darkred"
+    redSquare.style.border = "2px solid black"
+    redSquare.style.padding = "18px"
+  }
 
-function addPatternHistory(color){
-  let newColor = document.createElement("div")
-  newColor.innerText = color
-  if(color == 'Red')
-    newColor.style.color = "red"
-  if(color == 'Blue')
-    newColor.style.color = "blue"
-  if(color == 'Green')
-    newColor.style.color = "green"
-  if(color == 'Yellow')
-    newColor.style.color = "goldenrod"
+  function resetYellow(){
+    yellowSquare.style.background = "goldenrod"
+    yellowSquare.style.border = "2px solid black"
+    yellowSquare.style.padding = "18px"
+  }
 
-leftUI.appendChild(newColor)
-}
+  function resetBlue(){
+    blueSquare.style.background = "darkblue"
+    blueSquare.style.border = "2px solid black"
+    blueSquare.style.padding = "18px"
+  }
 
-function highlightRed(){
-  
-    redSquare.style.background = "red"
-}
+  function resetGreen(){
+    greenSquare.style.background = "darkgreen"
+    greenSquare.style.border = "2px solid black"
+    greenSquare.style.padding = "18px"
+  }
 
-function highlightYellow(){
-  
-  yellowSquare.style.background = "yellow"
-}
-
-function highlightGreen(){
-  
-    greenSquare.style.background = "greenyellow"
-}
-
-function highlightBlue(){
-  
-    blueSquare.style.background = "skyblue"
-}
-
-function resetRed(){
-  redSquare.style.background = "darkred"
-  redSquare.style.border = "2px solid black"
-  redSquare.style.padding = "18px"
-}
-
-function resetYellow(){
-  yellowSquare.style.background = "goldenrod"
-  yellowSquare.style.border = "2px solid black"
-  yellowSquare.style.padding = "18px"
-}
-
-function resetBlue(){
-  blueSquare.style.background = "darkblue"
-  blueSquare.style.border = "2px solid black"
-  blueSquare.style.padding = "18px"
-}
-
-function resetGreen(){
-  greenSquare.style.background = "darkgreen"
-  greenSquare.style.border = "2px solid black"
-  greenSquare.style.padding = "18px"
-}
-
-function resetAllColors(){
-  resetGreen()
-  resetBlue()
-  resetYellow()
-  resetRed()
-}
-
-
-
+  function resetAllColors(){
+    resetGreen()
+    resetBlue()
+    resetYellow()
+    resetRed()
+  }
 
 } // end playSimon function (Main function)
 
