@@ -5,6 +5,7 @@ let rightUI = document.body.querySelector(".rightUI")
 let topMessage = document.body.querySelector(".topMessage")
 let headerTitle = document.body.querySelector(".header-title")
 let footer = document.body.querySelector(".footer")
+let chessArea = document.body.querySelector("#chessArea")
 
 let lineBreak = document.createElement("br")
 
@@ -19,6 +20,13 @@ simonLogo.src = "simonLOGO.jpg"
 simonLogo.className = "imgLogo"
 simon.appendChild(simonLogo)
 
+let chess = document.createElement("div")
+chess.className = "chessGame"
+let chessLogo = document.createElement("img")
+chessLogo.src = "chessLOGO.jpg"
+chessLogo.className = "imgLogo"
+chess.appendChild(chessLogo)
+
 let ticTacToe = document.createElement("div")
 ticTacToe.className = "ticTacToeGame"
 let ticTacToeLogo = document.createElement("img")
@@ -28,6 +36,7 @@ ticTacToe.appendChild(ticTacToeLogo)
 
 playArea.appendChild(simon)
 playArea.appendChild(ticTacToe)
+playArea.appendChild(chess)
 
 chooseGame() //clears Hub Board and goes to main gaime function -- last function
 
@@ -69,7 +78,7 @@ function playSimon(){  //Main Simon Main Game
  
   createSimonBoard()
   activateSimonBoard()
-  modifyReturnToHub()
+  modifyReturnToHubFromSimon()
 
   let listen = false
   let simonPattern = []
@@ -254,8 +263,8 @@ function playSimon(){  //Main Simon Main Game
     yellowSquare.addEventListener("click", clickYellow)
   }
 
-  function modifyReturnToHub(){//Simon
-    console.log("in returnToHub function")
+  function modifyReturnToHubFromSimon(){//Simon
+    console.log("in returnToHub(Simon) function")
     returnToHub.style.visibility = "visible"
     returnToHub.addEventListener("click", returnFromSimon)
 
@@ -487,7 +496,7 @@ function playTicTacToe(){ //Main TicTacToe Main TTT Game
   console.log("inside playTicTacToe")
   headerTitle.innerText = "Tic-Tac-Toe"
   topMessage.innerText = "First Player (X) to go"
-  modifyReturnToHub()
+  modifyReturnToHubFromTTT()
 
   let tttArray = []
   let cellCount = 0
@@ -513,10 +522,11 @@ function playTicTacToe(){ //Main TicTacToe Main TTT Game
       cellCount++
     }
   }
-  playArea.appendChild(ticTacToeArea)
+  
   console.log("playArea after creating cells:", playArea)
-  let tttCells = document.body.querySelectorAll(".tttCell")
-  console.log(tttCells)
+  let tttCells = null
+   tttCells = document.body.querySelectorAll(".tttCell")
+  console.log("tttCells after querySelectorAll:" , tttCells)
   let currentPlayer = 'X'
   createTicTacToeBoard()
   startGame()
@@ -565,9 +575,9 @@ function playTicTacToe(){ //Main TicTacToe Main TTT Game
     }
 
 
-    function modifyReturnToHub(){
+    function modifyReturnToHubFromTTT(){//TicTacToe TTT
       //make reset viewable; add click to reset => go to hub
-      console.log("in modifyReturnHub function")
+      console.log("in modifyReturnHub(TTT) function")
       returnToHub.style.visibility = "visible"
       returnToHub.addEventListener("click", returnFromTicTacToe)
     
@@ -575,16 +585,10 @@ function playTicTacToe(){ //Main TicTacToe Main TTT Game
         console.log("playArea before removing cells:", playArea)
         //make resetBTN hidden; return to hub
         returnToHub.style.visibility = "hidden"
-        for (let i=0; i<9; i++){
-          console.log(tttCells[i])
-          tttCells[i].style.borderBottom = null
-          tttCells[i].style.borderRight = null
-          tttCells[i].outerHTML = ""
+        for (let i=0; i<tttCells.length; i++){
           tttCells[i].remove()
-
-        }
-        ticTacToeArea.innerHTML = ""        
-        tttCells = null
+        }      
+        
         leftUI.style.visibility = "hidden"
         rightUI.style.visibility = "hidden"
         chooseGame()
@@ -593,47 +597,161 @@ function playTicTacToe(){ //Main TicTacToe Main TTT Game
 }// end of playTicTacToe function (Main function)
 
 function playChess(){
-  modifyReturnToHub()
+  console.log("in playChess function")
+  console.log("chessArea:", chessArea)
+  modifyReturnToHubFromChess()
+  createChessBoard() 
+
+  let currentPiece = "empty"
+  let chessSquares = document.body.querySelectorAll(".chessSquare")
+  resetChessPieces("white") //choose the color on bottom to control
 
 
-  function modifyReturnToHub(){
+  chessArea.style.visibility = "visible"  
+  headerTitle.innerText = "Chess"
+  topMessage.innerText = "Chess is under production, \n Please come back later"
+  
+  
+  
+  function createChessBoard(){
+    for (let i = 1; i <= 12; i++)
+      for(let j = 1; j <=12; j++){
+        let tempCell = document.createElement("div")
+        tempCell.style.gridRow = j
+        tempCell.style.gridColumn = i
+        tempCell.className = 'chessSquare'
+        tempCell.id = "empty"
+        if (i%2==0) {
+          if (j%2==0)
+            tempCell.style.background = "navajowhite"
+          else
+            tempCell.style.background = "grey"
+        }
+        else{
+          if (j%2==0)
+            tempCell.style.background = "grey"
+          else
+            tempCell.style.background = "navajowhite"
+        }
+        // console.log("create listner for:", j, i)
+        tempCell.addEventListener("click", () =>  clickOnSquare( j, i))
+        chessArea.appendChild(tempCell)
+      }
+  }
+
+  function clickOnSquare(row, col){
+    console.log("clickOnSquare:", row, col)
+    if (currentPiece = "empty"){
+      currentPiece = getPieceAt(row, col)
+      //pick up piece
+    }
+    else{
+      
+      for(let i = 0; i<chessSquares.length; i++){
+        if (chessSquares[i].gridRow == row && chessSquares[i].gridColumn == col){
+          chessSquares[i].id =currentPiece
+          chessSquares[i].src = updateImg(currentPiece)
+          currentPiece = "empty"
+        }
+      }
+      //else
+        //'eat' the piece on location and place currentPiece
+    }
+  }
+
+  function updateImg(piece){
+    switch (piece){
+      case "whitePawn":
+        return "whitePawn.png"
+    }
+  }
+
+  function getPieceAt(row, col){
+    let result = ""
+    console.log("getPieceAt:", row, col)
+    for(let i = 0; i<chessSquares.length; i++){
+      console.log("checking chessSquare[i] i/row/col:", i, "/", chessSquares[i].gridRow, "/", chessSquares[i].gridColumn)
+      if (parseInt(chessSquares[i].gridRow) == row && parseInt(chessSquares[i].gridColumn) == col){
+        console.log("match found:", chessSquares.id)
+        result = chessSquares[i].id
+        chessSquares[i].id = "empty"
+        
+      }
+    }
+    console.log("piece is:", result)
+    return result
+  } // end of getPieceAt(row, col) function (chess)
+  
+
+  function resetChessPieces(color){
+    console.log("inside reset Chess pieces")
+    for (let i = 0; i < chessSquares.length; i++){
+      if (parseInt(chessSquares[i].style.gridRow) == 11){
+        let pieceImg = document.createElement("img")
+        pieceImg.src = "whitePawn.png"
+        pieceImg.className = "chessPieceImg"
+        chessSquares[i].id = "whitePawn"
+        chessSquares[i].appendChild(pieceImg)
+      }
+        
+
+    }
+    console.log("chessSquares:", chessSquares)
+  }
+
+  function modifyReturnToHubFromChess(){//chess
     console.log("inside modifyReturnToHub(Chess) function")
+    returnToHub.style.visibility = "visible"
+    returnToHub.addEventListener("click", returnFromChess)
+    function returnFromChess(){
+    
+      chessArea.style.visibility = "hidden"
+      for (let i = 0; i<chessSquares.length; i++)
+        chessSquares[i].remove()
+     
+      chooseGame()
+    }
   }
 }
 
-  function chooseGame(){
-    
-    createHub()
+   
+simon.addEventListener("click", startSimon)
+ticTacToe.addEventListener("click", startTicTacToe)
+chess.addEventListener("click" , startChess)
 
-    function createHub(){
-      simon.style.visibility     = "visible"
-      ticTacToe.style.visibility = "visible"
-      
-      simon.addEventListener("click", startSimon)
-      ticTacToe.addEventListener("click", startTicTacToe)
 
-    }
+  function startSimon(){
+    clearHub()
+    gameChoice = "simon"
+    playSimon()
+  }
 
-    function startSimon(){
-      clearHub()
-      gameChoice = "simon"
-      playSimon()
-    }
+  function startTicTacToe(){
+    clearHub()
+    gameChoice = "ticTacToe"
+    playTicTacToe()
+  }
 
-    function startTicTacToe(){
-      clearHub()
-      gameChoice = "ticTacToe"
-      playTicTacToe()
-    }
+  function startChess(){
+    clearHub()
+    gameChoice = "chess"
+    playChess()
+  }
 
-    function clearHub(){
-      console.log("in clear Hub function")
-      simon.style.visibility     = "hidden"
-      ticTacToe.style.visibility = "hidden"
-      simon.removeEventListener("click", startSimon)
-      ticTacToe.removeEventListener("click", startTicTacToe)
-      console.log("simon logo:" , simon)
-      console.log("TTTlogo:" , ticTacToe)
-      //clear all parts of hub
-    }
+  function clearHub(){
+    console.log("in clear Hub function")
+    simon.style.visibility     = "hidden"
+    ticTacToe.style.visibility = "hidden"
+    chess.style.visibility     = "hidden"
+    //clear all parts of hub
+  }
+
+
+function chooseGame(){
+  headerTitle.innerText = "Classic Games"
+  topMessage.innerText = "Choose Your Game"
+
+    simon.style.visibility     = "visible"
+    ticTacToe.style.visibility = "visible"
+    chess.style.visibility     = "visible"
 }
