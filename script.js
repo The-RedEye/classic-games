@@ -602,6 +602,10 @@ function playChess(){
   let chessGrid = []
   let currentPiece = null
   let eatenPieces = []
+  leftUI.style.visibility = "visible"
+  rightUI.style.visibility = "visible"
+  leftUI.innerText = "White Captures"
+  rightUI.innerText = "Black Captures"
 
   modifyReturnToHubFromChess()
   createChessBoard() 
@@ -722,8 +726,33 @@ function playChess(){
       }  
         
     }
-    // updateEatenPieces()
+    updateEatenPieces()
   }// end replaceHTMLSquare function
+
+  function updateEatenPieces(){
+    let blackEaten = []
+    let whiteEaten = []
+    for (let i = 0; i<eatenPieces.length; i++){
+      if (eatenPieces[i][0] == "white")
+        whiteEaten.push(eatenPieces[i])
+      else
+        blackEaten.push(eatenPieces[i])
+    }
+    let whiteCaptureText = "White Captures\n"
+    for (let j = 0; j<blackEaten.length; j++){
+      whiteCaptureText = whiteCaptureText +
+       "\n" + blackEaten[1]
+    }
+    leftUI.innerText = whiteCaptureText
+
+    let blackCaptureText = "Black Captures\n"
+    for (let k = 0; k<whiteEaten.length; k++){
+      blackCaptureText = blackCaptureText +
+      "\n" + whiteEaten[1]
+    }
+    rightUI.innerText = blackCaptureText
+
+  }
 
   function updateImg(piece){
     switch (piece){
