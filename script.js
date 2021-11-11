@@ -598,12 +598,16 @@ function playTicTacToe(){ //Main TicTacToe Main TTT Game
 
 function playChess(){
   console.log("in playChess function")
-  console.log("chessArea:", chessArea)
+
+  let chessGrid = []
+  let currentPiece = null
+  let eatenPieces = []
+
   modifyReturnToHubFromChess()
   createChessBoard() 
-
-  let currentPiece = "empty"
+  
   let chessSquares = document.body.querySelectorAll(".chessSquare")
+  
   resetChessPieces("white") //choose the color on bottom to control
 
 
@@ -614,13 +618,30 @@ function playChess(){
   
   
   function createChessBoard(){
-    for (let i = 1; i <= 12; i++)
-      for(let j = 1; j <=12; j++){
+    for (let i = 0; i<8; i++){
+    chessGrid.push([])
+      for(let j = 0; j <8; j++){
+
+        let row = j+1
+        let col = i+1
+       
+        const chessPiece = {
+          piece: null,
+          color: null,
+          row: i+1,
+          col: j+1
+        };
+       
+        chessGrid[i].push(chessPiece)
+
         let tempCell = document.createElement("div")
-        tempCell.style.gridRow = j
-        tempCell.style.gridColumn = i
+        tempCell.style.gridRow = row
+        tempCell.style.gridColumn = col
         tempCell.className = 'chessSquare'
-        tempCell.id = "empty"
+        tempCell.id = `${row}-${col}`
+          let pieceImg = document.createElement("img")  //new code
+          tempCell.appendChild(pieceImg)                //new code
+
         if (i%2==0) {
           if (j%2==0)
             tempCell.style.background = "navajowhite"
@@ -637,27 +658,72 @@ function playChess(){
         tempCell.addEventListener("click", () =>  clickOnSquare( j, i))
         chessArea.appendChild(tempCell)
       }
+    }
   }
 
   function clickOnSquare(row, col){
-    console.log("clickOnSquare:", row, col)
-    if (currentPiece = "empty"){
-      currentPiece = getPieceAt(row, col)
-      //pick up piece
+    console.log("clickOnSquare:", row, col, "with", currentPiece)
+    if (currentPiece == null){
+      
+      console.log(chessGrid[row][col])
+      
+      if(chessGrid[row][col].piece!=null){
+        currentPiece = {
+          piece: chessGrid[row][col].piece,
+          color: chessGrid[row][col].color,
+          row: chessGrid[row][col].row,
+          col: chessGrid[row][col].col
+        };
+        
+        console.log("currentPiece is now:" , currentPiece)
+        let updatedTopMessage = `picked up a ${currentPiece.color} ${currentPiece.piece}`
+        topMessage.innerText = updatedTopMessage
+        chessGrid[row][col].piece = null
+        chessGrid[row][col].color = null
+        replaceHTMLSquare(row+1, col+1, null)
+      }      
+      console.log("after clicking on a piece, currentPiece:", currentPiece)
     }
     else{
-      
-      for(let i = 0; i<chessSquares.length; i++){
-        if (chessSquares[i].gridRow == row && chessSquares[i].gridColumn == col){
-          chessSquares[i].id =currentPiece
-          chessSquares[i].src = updateImg(currentPiece)
-          currentPiece = "empty"
-        }
+      if(chessGrid[row][col].piece == null){
+        eatenPieces.push([`${chessGrid[row][col].color}`], [`${chessGrid[row][col].piece}`])
+        console.log(eatenPieces)
+        //create function to update eaten pieces
       }
+      chessGrid[row][col].piece = currentPiece.piece
+      chessGrid[row][col].piece = currentPiece.color
+      console.log(currentPiece)
+      replaceHTMLSquare(row+1, col+1, currentPiece)
+
+      currentPiece = null
+      //if square clicked on is empty
+        //place current piece on clicked square
+   
       //else
         //'eat' the piece on location and place currentPiece
     }
+    console.log("exiting clickOn function, piece is:", currentPiece)
   }
+
+  function replaceHTMLSquare(row, col, value){
+    
+    for (let i = 0; i < chessSquares.length; i++){ 
+      if (chessSquares[i].id == `${row}-${col}`) {
+        
+          chessSquares[i].firstChild.remove()  
+        if (value!=null){
+          console.log(value)
+          let chessPieceImg = document.createElement("img")
+          console.log(`${value.color}${value.piece}.png`)
+          chessPieceImg.src = `${value.color}${value.piece}.png`
+          chessSquares[i].appendChild(chessPieceImg)
+
+        }          
+      }  
+        
+    }
+    // updateEatenPieces()
+  }// end replaceHTMLSquare function
 
   function updateImg(piece){
     switch (piece){
@@ -666,38 +732,77 @@ function playChess(){
     }
   }
 
-  function getPieceAt(row, col){
-    let result = ""
-    console.log("getPieceAt:", row, col)
-    for(let i = 0; i<chessSquares.length; i++){
-      console.log("checking chessSquare[i] i/row/col:", i, "/", chessSquares[i].gridRow, "/", chessSquares[i].gridColumn)
-      if (parseInt(chessSquares[i].gridRow) == row && parseInt(chessSquares[i].gridColumn) == col){
-        console.log("match found:", chessSquares.id)
-        result = chessSquares[i].id
-        chessSquares[i].id = "empty"
+  // function getPieceAt(row, col){
+  //   let result = ""
+  //   console.log("getPieceAt:", row, col)
+  //   for(let i = 0; i<chessSquares.length; i++){
+  //     console.log("checking chessSquare[i] i/row/col:", i, "/", chessSquares[i].gridRow, "/", chessSquares[i].gridColumn)
+  //     if (parseInt(chessSquares[i].gridRow) == row && parseInt(chessSquares[i].gridColumn) == col){
+  //       console.log("match found:", chessSquares.id)
+  //       result = chessSquares[i].id
+  //       chessSquares[i].id = "empty"
         
-      }
-    }
-    console.log("piece is:", result)
-    return result
-  } // end of getPieceAt(row, col) function (chess)
+  //     }
+  //   }
+  //   console.log("piece is:", result)
+  //   return result
+  // } // end of getPieceAt(row, col) function (chess)
   
 
   function resetChessPieces(color){
     console.log("inside reset Chess pieces")
-    for (let i = 0; i < chessSquares.length; i++){
-      if (parseInt(chessSquares[i].style.gridRow) == 11){
-        let pieceImg = document.createElement("img")
+
+    for (let i = 0; i < chessGrid.length; i++){
+      for (let j = 0; j< chessGrid[i].length; j++){
+        if (chessGrid[i][j].row == 7){ //reset bottom pawns (white)
+          chessGrid[i][j].piece = "Pawn"
+          chessGrid[i][j].color = "white"
+        }
+        else if (chessGrid[i][j].row == 2){//reset top pawns (black)
+          chessGrid[i][j].piece = "Pawn"
+          chessGrid[i][j].color = "black"
+        }
+
+      }
+    } // end of chessGrid iterative outer loop to reset object values (color = white)
+    for (let i = 0; i < chessSquares.length; i++){ //update html with chessGrid.obj values
+      let tempSquare = chessSquares[i]
+      let tempSquareCoord = tempSquare.id.split("-")
+      console.log(tempSquareCoord, tempSquare )
+
+      if (tempSquareCoord[0] == 7){
+        let pieceImg = tempSquare.firstChild
         pieceImg.src = "whitePawn.png"
         pieceImg.className = "chessPieceImg"
-        chessSquares[i].id = "whitePawn"
-        chessSquares[i].appendChild(pieceImg)
       }
-        
 
-    }
-    console.log("chessSquares:", chessSquares)
-  }
+      if (tempSquareCoord[0] == 2){
+        let pieceImg = tempSquare.firstChild
+        pieceImg.src = "blackPawn.png"
+        pieceImg.className = "chessPieceImg"
+      }
+
+
+    } //end of chessSquares (node) loop to modify child images with chess piece
+
+          
+    // for (let i = 0; i < chessSquares.length; i++){
+    //   if (parseInt(chessSquares[i].style.gridRow) == 7){//reset white pawns
+    //     let pieceImg = document.createElement("img")
+    //     pieceImg.src = "whitePawn.png"
+    //     pieceImg.className = "chessPieceImg"
+    //     chessSquares[i].appendChild(pieceImg) 
+    //   }
+    //   if (parseInt(chessSquares[i].style.gridRow) == 2){//reset black pawns
+    //     let pieceImg = document.createElement("img")
+    //     pieceImg.src = "blackPawn.png"
+    //     pieceImg.className = "blackPieceImg"
+    //     chessSquares[i].appendChild(pieceImg)
+    //   }
+      
+    // }
+    console.log("after reset, chessSquares:", chessSquares)
+  } //end of resetChessPieces(color) function
 
   function modifyReturnToHubFromChess(){//chess
     console.log("inside modifyReturnToHub(Chess) function")
